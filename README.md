@@ -104,10 +104,6 @@ With the database properly set up, to start using it with your code, you may nee
 
 On the *SharedPaths.kt* file, found on src -> main -> kotlin -> shared. change the **JDBC_CONNECTION_STRING** host for the IP address of the VM and port for the port used by the DBeaver connection. Then, input your credentials in the specified place.
 
-**Warning!** It's preferable to not upload the data from your SharedPaths.kt file, so please add a .gitignore before commiting.
-
-On .gitignore file, add: `src\main\kotlin\shared\SharedPaths.kt`
-
 On the **pom.xml** file, add the following dependency:
 
 ```

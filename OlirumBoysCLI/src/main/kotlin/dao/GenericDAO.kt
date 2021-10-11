@@ -2,8 +2,8 @@ package dao
 
 interface GenericDAO
 {
-    fun takeOne(id: Int): Any
-    fun takeAll(): List<Any>
+    fun idSearch(id: Int): Any
+    fun showAll(): List<Any>
     fun insertOne(obj: Any): Unit
     fun update(abj: Any): Unit
     fun delete(id: Int): Unit
