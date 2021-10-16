@@ -4,7 +4,10 @@ import models.Game
 fun main() {
     val gdao = GameDAO()
 
-    //var game = gdao.idSearch(1)
+    //var game = gdao.idSearch(5)
+    //println(game)
+
+    //var game = gdao.nameSearch("Final Fantasy XV")
     //println(game)
 
     //var games = gdao.getAll()
@@ -13,7 +16,9 @@ fun main() {
     //    println(game)
     //}
 
-    //gdao.insertOne(Game(2, "Fire Emblem: Three Houses", "Koei Tecmo", "Tactical RPG"))
+    //gdao.insert(Game(10000, "Sid Meier's Civilization VI", "Firaxis Games", "Strategy"))
 
     //gdao.update(Game(3, "GUILTY GEAR -STRIVE-", "Arc System Works", "Fighting"))
+
+    //gdao.delete(7)
 }
