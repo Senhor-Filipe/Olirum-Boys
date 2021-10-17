@@ -33,7 +33,7 @@ class ReviewDAO : GenericDAO {
 
         try {
             val connection = ConnectionDAO()
-            val resultSet= connection.executeQuery("SELECT * FROM Reviews WHERE review_id= ${id};")
+            val resultSet= connection.executeQuery("SELECT * FROM Reviews WHERE user_id = ${id};")
             while (resultSet?.next()!!){
                 reviews.add(
                     Review(
@@ -58,7 +58,7 @@ class ReviewDAO : GenericDAO {
 
         try {
             val connection = ConnectionDAO()
-            val resultSet= connection.executeQuery("SELECT * FROM Reviews WHERE review_id= ${id};")
+            val resultSet= connection.executeQuery("SELECT * FROM Reviews WHERE game_id= ${id};")
             while (resultSet?.next()!!){
                 reviews.add(
                     Review(
