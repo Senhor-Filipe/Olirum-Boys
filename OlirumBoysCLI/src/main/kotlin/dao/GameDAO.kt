@@ -108,6 +108,7 @@ class GameDAO: GenericDAO {
         {
             println("Game already exists in the database.")
             println(nameSearch(game.game_name))
+            println("\n")
         }
     }
 
