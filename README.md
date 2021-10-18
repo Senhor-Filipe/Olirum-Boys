@@ -1,4 +1,8 @@
 # Olirum-Boys
+
+Repositório para os T3 e T4 de ECM251.
+Este projeto consiste em desenvolver uma API que conecta um site para resenhas de usuários sobre jogos eletrônicos a uma base de dados que contém os registros de resenhas, jogos e usuários escritos em Kotlin.
+
 Repository for ECM251 T3 & T4.
 This project consists on developing an API that connects a website for user-created reviews for games to a database that contains the reviews, games and users written in Kotlin.
 
