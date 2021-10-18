@@ -2,13 +2,15 @@ package dao
 
 import models.Review
 
-class ReviewDAO : GenericDAO {
-    override fun idSearch(id: Int): Any {
+class ReviewDAO : GenericDAO
+{
+    override fun idSearch(review_id: Int): Any
+    {
         var reviews= mutableListOf<Review>()
 
         try {
             val connection = ConnectionDAO()
-            val resultSet= connection.executeQuery("SELECT * FROM Reviews WHERE review_id= ${id};")
+            val resultSet= connection.executeQuery("SELECT * FROM Reviews WHERE review_id= ${review_id};")
             while (resultSet?.next()!!){
                 reviews.add(
                     Review(
@@ -28,12 +30,13 @@ class ReviewDAO : GenericDAO {
         return reviews
     }
 
-    fun userIDSearch(id: Int): Any {
+    fun userIDSearch(user_id: Int): Any
+    {
         var reviews= mutableListOf<Review>()
 
         try {
             val connection = ConnectionDAO()
-            val resultSet= connection.executeQuery("SELECT * FROM Reviews WHERE user_id = ${id};")
+            val resultSet= connection.executeQuery("SELECT * FROM Reviews WHERE user_id = ${user_id};")
             while (resultSet?.next()!!){
                 reviews.add(
                     Review(
@@ -53,12 +56,13 @@ class ReviewDAO : GenericDAO {
         return reviews
     }
 
-    fun gameIDSearch(id: Int): Any {
+    fun gameIDSearch(game_id: Int): Any
+    {
         var reviews= mutableListOf<Review>()
 
         try {
             val connection = ConnectionDAO()
-            val resultSet= connection.executeQuery("SELECT * FROM Reviews WHERE game_id= ${id};")
+            val resultSet= connection.executeQuery("SELECT * FROM Reviews WHERE game_id= ${game_id};")
             while (resultSet?.next()!!){
                 reviews.add(
                     Review(
@@ -78,7 +82,8 @@ class ReviewDAO : GenericDAO {
         return reviews
     }
 
-    override fun getAll(): List<Any> {
+    override fun getAll(): List<Any>
+    {
 
         var reviews= mutableListOf<Review>()
 
@@ -104,14 +109,14 @@ class ReviewDAO : GenericDAO {
         return reviews
     }
 
-    override fun insert(obj: Any) {
+    override fun insert(obj: Any)
+    {
         val review = obj as Review
 
         //No need for possibleDuplicateDetector, since there can be multiple reviews for the same game
-        try{
+        try {
             val connection = ConnectionDAO()
-            val preparedStatement = connection.getPreparedStatement(
-                """
+            val preparedStatement = connection.getPreparedStatement("""
                     INSERT INTO olirum_boys.Reviews
                     (user_id, game_id, review_body, score)
                     VALUES(?,?,?,?);
@@ -129,9 +134,10 @@ class ReviewDAO : GenericDAO {
         }
     }
 
-    override fun update(obj: Any) {
+    override fun update(obj: Any)
+    {
         val review = obj as Review
-        try{
+        try {
             val connection = ConnectionDAO()
             val preparedStatement = connection.getPreparedStatement("""
                 UPDATE olirum_boys.Reviews
@@ -151,7 +157,8 @@ class ReviewDAO : GenericDAO {
         }
     }
 
-    override fun delete(id: Int) {
+    override fun delete(id: Int)
+    {
         try {
             val connection= ConnectionDAO()
             val preparedStatement = connection.getPreparedStatement("DELETE FROM olirum_boys.Reviews WHERE review_id = ${id}")

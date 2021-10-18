@@ -1,5 +1,6 @@
 import dao.GameDAO
 import dao.ReviewDAO
+import dao.UserDAO
 import models.Game
 import models.Review
 
@@ -46,6 +47,10 @@ fun main() {
 //    var review = rdao.idSearch(1)
 //    println(review)
 
-    //rdao.delete(1)
+//    rdao.delete(1)
+
+    val udao = UserDAO()
+    val user = udao.idSearch(1)
+    println(user)
 
 }

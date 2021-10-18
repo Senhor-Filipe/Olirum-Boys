@@ -2,22 +2,23 @@ package dao
 
 import models.User
 
-class UserDAO: GenericDAO {
-    override fun idSearch(id: Int): Any
+class UserDAO: GenericDAO
+{
+    override fun idSearch(user_id: Int): Any
     {
         var users = mutableListOf<User>()
 
         try {
             val connection = ConnectionDAO()
-            val resultSet = connection.executeQuery("SELECT * FROM Users WHERE user_id = ${id};")
+            val resultSet = connection.executeQuery("SELECT * FROM Users WHERE user_id = ${user_id};")
             while (resultSet?.next()!!)
             {
                 users.add(
                     User(
                         resultSet.getInt("user_id"),
                         resultSet.getString("user_name"),
-                        resultSet.getString("user_pwd"),
-                        resultSet.getString("user_level")
+                        resultSet.getString("user_pwd")
+                        //, resultSet.getString("user_level")
                     )
                 )
             }
@@ -31,19 +32,19 @@ class UserDAO: GenericDAO {
 
     fun nameSearch(user_name: String): Any
     {
-        var users = mutableListOf<User>()
+        var user = mutableListOf<User>()
 
         try {
             val connection = ConnectionDAO()
             val resultSet = connection.executeQuery("SELECT * FROM Users WHERE user_name = \"${user_name}\";")
             while (resultSet?.next()!!)
             {
-                users.add(
+                user.add(
                     User(
                         resultSet.getInt("user_id"),
                         resultSet.getString("user_name"),
-                        resultSet.getString("user_pwd"),
-                        resultSet.getString("user_level")
+                        resultSet.getString("user_pwd")
+                        //, resultSet.getString("user_level")
                     )
                 )
             }
@@ -52,7 +53,7 @@ class UserDAO: GenericDAO {
             e.printStackTrace()
         }
 
-        return users
+        return user
     }
 
     override fun getAll(): List<Any>
@@ -68,8 +69,8 @@ class UserDAO: GenericDAO {
                     User(
                         resultSet.getInt("user_id"),
                         resultSet.getString("user_name"),
-                        resultSet.getString("user_pwd"),
-                        resultSet.getString("user_level")
+                        resultSet.getString("user_pwd")
+                        //, resultSet.getString("user_level")
                     )
                 )
             }
@@ -77,12 +78,12 @@ class UserDAO: GenericDAO {
         } catch (e:Exception) {
             e.printStackTrace()
         }
-        return user
+        return users
     }
 
     override fun insert(obj: Any)
     {
-        val user = obj as user
+        val user = obj as User
         if (!possibleDuplicateDetector(user.user_name))
         {
             try {
@@ -90,13 +91,12 @@ class UserDAO: GenericDAO {
                 val preparedStatement = connection.getPreparedStatement(
                     """
                 INSERT INTO olirum_boys.Users
-                (user_name, user_pwd, user_level)
-                VALUES (?, ?, ?);
+                (user_name, user_pwd)
+                VALUES (?, ?);
                 """.trimMargin()
                 )
                 preparedStatement?.setString(1, user.user_name)
                 preparedStatement?.setString(2, user.user_pwd)
-                preparedStatement?.setString(3, user.user_level)
                 preparedStatement?.executeUpdate()
                 connection.commit()
                 connection.close()
@@ -119,13 +119,12 @@ class UserDAO: GenericDAO {
             val connection = ConnectionDAO()
             val preparedStatement = connection.getPreparedStatement("""
                 UPDATE olirum_boys.Users
-                SET user_name = ?, user_pwd = ?, user_level = ?
+                SET user_name = ?, user_pwd = ?
                 WHERE user_id = ?;
                 """.trimMargin())
             preparedStatement?.setString(1, user.user_name)
             preparedStatement?.setString(2, user.user_pwd)
-            preparedStatement?.setString(3, user.user_level)
-            preparedStatement?.setInt(4, user.user_id)
+            preparedStatement?.setInt(3, user.user_id)
             preparedStatement?.executeUpdate()
             connection.commit()
             connection.close()
@@ -134,11 +133,11 @@ class UserDAO: GenericDAO {
         }
     }
 
-    override fun delete(id: Int)
+    override fun delete(user_id: Int)
     {
         try {
             val connection = ConnectionDAO()
-            val preparedStatement = connection.getPreparedStatement("DELETE FROM olirum_boys.Users WHERE user_id = ${id}")
+            val preparedStatement = connection.getPreparedStatement("DELETE FROM olirum_boys.Users WHERE user_id = ${user_id}")
             preparedStatement?.executeUpdate()
             connection.commit()
             connection.close()
