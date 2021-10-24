@@ -1,6 +1,5 @@
 # Olirum-Boys
 
-&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Repository for **ECM251 T3 & T4**.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This project consists on developing an **API** that connects a website for user-created reviews for games to a database that contains the reviews, games and users via **HTTP requests**.
 
