@@ -1,7 +1,13 @@
 # Olirum-Boys
 
+Repositório para os **T3 e T4 de ECM251**.
+Este projeto consiste em desenvolver uma **API** que conecta um site para resenhas de usuários sobre jogos eletrônicos a uma base de dados que contém as resenhas e cadastros de jogos e usuários via **HTTP requests**.
+ 
 Repository for **ECM251 T3 & T4**.
-This project consists on developing an **API** that connects a website for user-created reviews for games to a database that contains the reviews, games and users via **HTTP requests**.
+This project consists on developing an **API** that connects a website for user-created reviews for games to a database that contains the reviews and registration of games and users via **HTTP requests**.
+
+Linguagens utilizadas neste projeto: **Kotlin**
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Frameworks utilizadas neste projeto: **Ktor**
 
 Code languages being used by this project: **Kotlin**
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Frameworks being used in this project: **Ktor**
