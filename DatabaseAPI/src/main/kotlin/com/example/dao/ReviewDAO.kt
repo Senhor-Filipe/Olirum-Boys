@@ -1,17 +1,16 @@
 package com.example.dao
 
 import com.example.models.Review
-import com.sun.org.apache.xpath.internal.operations.Bool
 
 class ReviewDAO : GenericDAO
 {
-    override fun idSearch(review_id: Int): Any
+    override fun idSearch(id: Int): List<Review>
     {
         var reviews= mutableListOf<Review>()
 
         try {
             val connection = ConnectionDAO()
-            val resultSet= connection.executeQuery("SELECT * FROM Reviews WHERE review_id= ${review_id};")
+            val resultSet= connection.executeQuery("SELECT * FROM Reviews WHERE review_id= ${id};")
             while (resultSet?.next()!!){
                 reviews.add(
                     Review(
@@ -31,9 +30,9 @@ class ReviewDAO : GenericDAO
         return reviews
     }
 
-    fun userIDSearch(user_id: Int): Any
+    fun userIDSearch(user_id: Int): List<Review>
     {
-        var reviews= mutableListOf<Review>()
+        var reviews = mutableListOf<Review>()
 
         try {
             val connection = ConnectionDAO()
@@ -57,7 +56,7 @@ class ReviewDAO : GenericDAO
         return reviews
     }
 
-    fun gameIDSearch(game_id: Int): Any
+    fun gameIDSearch(game_id: Int): List<Review>
     {
         var reviews= mutableListOf<Review>()
 

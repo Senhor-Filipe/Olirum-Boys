@@ -10,68 +10,66 @@ import io.ktor.routing.*
 
 fun Route.gameRouting() {
     route("/game") {
-        getAll()
-        gameById()
-        insertGame()
-        updateGame()
-        deleteGame()
-    }
-}
+        get {
+            val games = GameDAO().getAll()
+            return@get call.respond(games)
+        }
 
-fun Route.getAll() {
-    get {
-        val games = GameDAO().getAll()
-        return@get call.respond(games)
-    }
-}
-
-fun Route.gameById() {
-    get("{id}") {
-        val gameId = call.parameters["id"] ?: return@get call.respondText(
-            "Missing or malformed id",
-            status = HttpStatusCode.BadRequest
-        )
-
-        val game: List<Game> = GameDAO().idSearch(gameId.toInt())
-
-        if (game.isEmpty())
-            return@get call.respondText(
-                "No game with id $gameId",
-                status = HttpStatusCode.NotFound
-            )
-        call.respond(game)
-    }
-}
-
-fun Route.insertGame() {
-    //Not tested yet!!
-    post {
-        val game = call.receive<Game>()
-
-        if (GameDAO().insert(game)) {
-            call.respondText(
-                "Game succesfully created",
-                status = HttpStatusCode.Created
-            )
-        } else {
-            call.respondText(
-                "Game could not be created",
+        get("{game_id}") {
+            val gameId = call.parameters["game_id"] ?: return@get call.respondText(
+                "Missing or malformed id",
                 status = HttpStatusCode.BadRequest
             )
+
+            val game: List<Game> = GameDAO().idSearch(gameId.toInt())
+
+            if (game.isEmpty()) {
+                return@get call.respondText(
+                    "Game with id $gameId not found",
+                    status = HttpStatusCode.NotFound
+                )
+            }
+            return@get call.respond(game)
         }
-    }
-}
 
-fun Route.updateGame() {
-    // TODO: 23/10/2021  
-}
+        delete("{game_id}") {
+            val gameId = call.parameters["game_id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
+            if (GameDAO().delete(gameId.toInt()))
+                call.respondText("Game removed succesfully", status = HttpStatusCode.Accepted)
+            else
+                call.respondText("Not found", status = HttpStatusCode.NotFound)
+        }
 
-fun Route.deleteGame() {
-    delete("{id}") {
-        val gameId = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
-        if (GameDAO().delete(gameId.toInt()))
-            call.respondText("Game removed succesfully", status = HttpStatusCode.Accepted)
-        else
-            call.respondText("Not found", status = HttpStatusCode.NotFound)
+        post {
+            val game = call.receive<Game>()
+
+            if (GameDAO().insert(game)) {
+                call.respondText(
+                    "Game succesfully created",
+                    status = HttpStatusCode.Created
+                )
+            } else {
+                call.respondText(
+                    "Game could not be created",
+                    status = HttpStatusCode.BadRequest
+                )
+            }
+        }
+
+        post("/update") {
+            val game = call.receive<Game>()
+
+            if (GameDAO().update(game)) {
+                call.respondText(
+                    "Game succesfully updated",
+                    status = HttpStatusCode.Created
+                )
+            } else {
+                call.respondText(
+                    "Game could not be updated",
+                    status = HttpStatusCode.BadRequest
+                )
+            }
+        }
     }
 }

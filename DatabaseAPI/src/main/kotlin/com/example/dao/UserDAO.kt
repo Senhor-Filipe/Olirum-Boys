@@ -4,7 +4,7 @@ import com.example.models.User
 
 class UserDAO: GenericDAO
 {
-    override fun idSearch(user_id: Int): Any
+    override fun idSearch(user_id: Int): List<User>
     {
         var users = mutableListOf<User>()
 
@@ -30,7 +30,7 @@ class UserDAO: GenericDAO
         return users
     }
 
-    fun nameSearch(user_name: String): Any
+    fun nameSearch(user_name: String): List<User>
     {
         var user = mutableListOf<User>()
 
@@ -56,7 +56,7 @@ class UserDAO: GenericDAO
         return user
     }
 
-    override fun getAll(): List<Any>
+    override fun getAll(): List<User>
     {
         var users = mutableListOf<User>()
         try {
