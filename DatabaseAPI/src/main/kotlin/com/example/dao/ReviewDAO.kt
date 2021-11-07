@@ -1,12 +1,13 @@
 package com.example.dao
 
 import com.example.models.Review
+import com.example.models.lists.ReviewList
 
 class ReviewDAO : GenericDAO
 {
-    override fun idSearch(id: Int): List<Review>
+    override fun idSearch(id: Int): Review
     {
-        var reviews= mutableListOf<Review>()
+        val reviews = mutableListOf<Review>()
 
         try {
             val connection = ConnectionDAO()
@@ -27,13 +28,12 @@ class ReviewDAO : GenericDAO
             e.printStackTrace()
         }
 
-        return reviews
+        return reviews[0]
     }
 
-    fun userIDSearch(user_id: Int): List<Review>
+    fun userIDSearch(user_id: Int): ReviewList
     {
-        var reviews = mutableListOf<Review>()
-
+        val reviews = mutableListOf<Review>()
         try {
             val connection = ConnectionDAO()
             val resultSet= connection.executeQuery("SELECT * FROM Reviews WHERE user_id = ${user_id};")
@@ -53,12 +53,12 @@ class ReviewDAO : GenericDAO
             e.printStackTrace()
         }
 
-        return reviews
+        return ReviewList(reviews)
     }
 
-    fun gameIDSearch(game_id: Int): List<Review>
+    fun gameIDSearch(game_id: Int): ReviewList
     {
-        var reviews= mutableListOf<Review>()
+        val reviews= mutableListOf<Review>()
 
         try {
             val connection = ConnectionDAO()
@@ -79,13 +79,13 @@ class ReviewDAO : GenericDAO
             e.printStackTrace()
         }
 
-        return reviews
+        return ReviewList(reviews)
     }
 
-    override fun getAll(): List<Any>
+    override fun getAll(): ReviewList
     {
 
-        var reviews= mutableListOf<Review>()
+        val reviews= mutableListOf<Review>()
 
         try {
             val connection = ConnectionDAO()
@@ -106,7 +106,7 @@ class ReviewDAO : GenericDAO
             e.printStackTrace()
         }
 
-        return reviews
+        return ReviewList(reviews)
     }
 
     override fun insert(obj: Any): Boolean
@@ -173,7 +173,7 @@ class ReviewDAO : GenericDAO
     {
         try {
             val connection= ConnectionDAO()
-            val preparedStatement = connection.getPreparedStatement("DELETE FROM olirum_boys.Reviews WHERE review_id = ${id}")
+            val preparedStatement = connection.getPreparedStatement("DELETE FROM olirum_boys.Reviews WHERE review_id = $id")
             preparedStatement?.executeUpdate()
             connection.commit()
             connection.close()

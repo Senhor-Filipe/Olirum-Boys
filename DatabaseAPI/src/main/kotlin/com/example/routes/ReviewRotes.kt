@@ -2,6 +2,7 @@ package com.example.routes
 
 import com.example.dao.ReviewDAO
 import com.example.models.Review
+import com.example.models.lists.ReviewList
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.request.*
@@ -16,14 +17,8 @@ fun Route.reviewRouting() {
                 status = HttpStatusCode.BadRequest
             )
 
-            val reviews: List<Review> = ReviewDAO().gameIDSearch(gameId.toInt())
+            val reviews: ReviewList = ReviewDAO().gameIDSearch(gameId.toInt())
 
-            if (reviews.isEmpty()) {
-                return@get call.respondText(
-                    "Reviews for the game with id $gameId not found",
-                    status = HttpStatusCode.NotFound
-                )
-            }
             return@get call.respond(reviews)
         }
     }
@@ -35,14 +30,8 @@ fun Route.reviewRouting() {
                 status = HttpStatusCode.BadRequest
             )
 
-            val reviews: List<Review> = ReviewDAO().userIDSearch(userId.toInt())
+            val reviews: ReviewList = ReviewDAO().userIDSearch(userId.toInt())
 
-            if (reviews.isEmpty()) {
-                return@get call.respondText(
-                    "Reviews for the user with id $userId not found",
-                    status = HttpStatusCode.NotFound
-                )
-            }
             return@get call.respond(reviews)
         }
     }
@@ -59,14 +48,8 @@ fun Route.reviewRouting() {
                 status = HttpStatusCode.BadRequest
             )
 
-            val review: List<Review> = ReviewDAO().idSearch(reviewId.toInt())
+            val review: Review = ReviewDAO().idSearch(reviewId.toInt())
 
-            if (review.isEmpty()) {
-                return@get call.respondText(
-                    "Review with id $reviewId not found",
-                    status = HttpStatusCode.NotFound
-                )
-            }
             return@get call.respond(review)
         }
 

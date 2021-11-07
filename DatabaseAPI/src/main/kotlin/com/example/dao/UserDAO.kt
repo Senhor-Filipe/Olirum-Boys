@@ -1,16 +1,17 @@
 package com.example.dao
 
 import com.example.models.User
+import com.example.models.lists.UserList
 
 class UserDAO: GenericDAO
 {
-    override fun idSearch(user_id: Int): List<User>
+    override fun idSearch(id: Int): User
     {
-        var users = mutableListOf<User>()
+        val users = mutableListOf<User>()
 
         try {
             val connection = ConnectionDAO()
-            val resultSet = connection.executeQuery("SELECT * FROM Users WHERE user_id = ${user_id};")
+            val resultSet = connection.executeQuery("SELECT * FROM Users WHERE user_id = $id;")
             while (resultSet?.next()!!)
             {
                 users.add(
@@ -27,38 +28,12 @@ class UserDAO: GenericDAO
             e.printStackTrace()
         }
 
-        return users
+        return users[0]
     }
 
-    fun nameSearch(user_name: String): List<User>
+    override fun getAll(): UserList
     {
-        var user = mutableListOf<User>()
-
-        try {
-            val connection = ConnectionDAO()
-            val resultSet = connection.executeQuery("SELECT * FROM Users WHERE user_name = \"${user_name}\";")
-            while (resultSet?.next()!!)
-            {
-                user.add(
-                    User(
-                        resultSet.getInt("user_id"),
-                        resultSet.getString("user_name"),
-                        resultSet.getString("user_pwd")
-                        //, resultSet.getString("user_level")
-                    )
-                )
-            }
-            connection.close()
-        } catch (e:Exception) {
-            e.printStackTrace()
-        }
-
-        return user
-    }
-
-    override fun getAll(): List<User>
-    {
-        var users = mutableListOf<User>()
+        val users = mutableListOf<User>()
         try {
             val connection = ConnectionDAO()
             val resultSet = connection.executeQuery("SELECT * FROM olirum_boys.Users")
@@ -78,7 +53,7 @@ class UserDAO: GenericDAO
         } catch (e:Exception) {
             e.printStackTrace()
         }
-        return users
+        return UserList(users)
     }
 
     override fun insert(obj: Any): Boolean
@@ -105,8 +80,8 @@ class UserDAO: GenericDAO
                     e.printStackTrace()
                 }
             } else {
-                println("User already exists in the database.")
-                println(nameSearch(user.user_name))
+                println("Username already exists in the database.")
+                println(user.user_name)
                 println("\n")
             }
         } catch (e: Exception) {
@@ -144,11 +119,11 @@ class UserDAO: GenericDAO
         return false
     }
 
-    override fun delete(user_id: Int): Boolean
+    override fun delete(id: Int): Boolean
     {
         try {
             val connection = ConnectionDAO()
-            val preparedStatement = connection.getPreparedStatement("DELETE FROM olirum_boys.Users WHERE user_id = ${user_id}")
+            val preparedStatement = connection.getPreparedStatement("DELETE FROM olirum_boys.Users WHERE user_id = $id")
             preparedStatement?.executeUpdate()
             connection.commit()
             connection.close()
@@ -163,9 +138,9 @@ class UserDAO: GenericDAO
         This function will detect, when inserting a new User object to the database, if said user already exists
       in the database.
      */
-    fun possibleDuplicateDetector(user_name: String): Boolean
+    private fun possibleDuplicateDetector(user_name: String): Boolean
     {
-        var possibleDuplicates = mutableListOf<String>()
+        val possibleDuplicates = mutableListOf<String>()
         try {
             val connection = ConnectionDAO()
             val resultSet = connection.executeQuery("""

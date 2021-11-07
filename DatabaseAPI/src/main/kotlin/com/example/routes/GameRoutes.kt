@@ -21,14 +21,8 @@ fun Route.gameRouting() {
                 status = HttpStatusCode.BadRequest
             )
 
-            val game: List<Game> = GameDAO().idSearch(gameId.toInt())
+            val game = GameDAO().idSearch(gameId.toInt())
 
-            if (game.isEmpty()) {
-                return@get call.respondText(
-                    "Game with id $gameId not found",
-                    status = HttpStatusCode.NotFound
-                )
-            }
             return@get call.respond(game)
         }
 

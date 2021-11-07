@@ -21,14 +21,8 @@ fun Route.userRouting() {
                 status = HttpStatusCode.BadRequest
             )
 
-            val user: List<User> = UserDAO().idSearch(userId.toInt())
+            val user: User = UserDAO().idSearch(userId.toInt())
 
-            if (user.isEmpty()) {
-                return@get call.respondText(
-                    "User with id $userId not found",
-                    status = HttpStatusCode.NotFound
-                )
-            }
             return@get call.respond(user)
         }
 
