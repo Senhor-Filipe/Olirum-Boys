@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front_end/models/game.dart';
+import 'package:flutter_front_end/models/screen_arguments.dart';
 import 'package:flutter_front_end/widgets/text/game_card_body.dart';
 
 class GameCard extends StatefulWidget {
 
+  final ScreenArguments data;
   final Game game;
 
   const GameCard({
     Key? key,
-    required this.game
+    required this.game,
+    required this.data
   }) : super(key: key);
 
   @override
@@ -24,7 +27,12 @@ class _GameCardState extends State<GameCard> {
       onTap: () {
         Navigator.of(context).pushNamed(
           '/game',
-          arguments: widget.game.gameId
+          arguments: ScreenArguments(
+              widget.data.username,
+              widget.data.userId,
+              widget.data.logged,
+              widget.game.gameId
+          )
         );
       },
 

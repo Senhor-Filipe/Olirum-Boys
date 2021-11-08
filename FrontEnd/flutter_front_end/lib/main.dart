@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       // App title
       title: 'GoldenConsole',
       // Sets default page - Current default page: screens.dart
-      initialRoute: '/',
+      initialRoute: "/",
       // Sets Route management from route_generator.dart
       onGenerateRoute: RouteGenerator.generateRoute,
       // Sets the theme and style of the site/app

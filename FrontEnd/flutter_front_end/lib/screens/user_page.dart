@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front_end/models/screen_arguments.dart';
 
 class UserPage extends StatefulWidget {
-  final int data;
+  final ScreenArguments data;
 
   const UserPage({
     Key? key,
@@ -16,6 +17,8 @@ class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement a way for the logged user to see his own and others profiles. If there's time, with different views for own profile and others
-    throw UnimplementedError();
+    return widget.data.userId == widget.data.dataId?
+    Text("This is your profile ${widget.data.username}"):
+    Text("This is not your profile");
   }
 }

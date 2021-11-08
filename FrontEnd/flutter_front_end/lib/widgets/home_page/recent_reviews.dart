@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front_end/models/review.dart';
+import 'package:flutter_front_end/models/screen_arguments.dart';
 import 'package:flutter_front_end/widgets/cards/review_card.dart';
 import 'package:flutter_front_end/widgets/responsive.dart';
 import 'package:flutter_front_end/widgets/text/title_1.dart';
 
 
 class RecentReviews extends StatefulWidget {
+  final ScreenArguments data;
+
   const RecentReviews({
-    Key? key
+    Key? key,
+    required this.data
   }) : super(key: key);
 
   @override
@@ -70,7 +74,7 @@ class _RecentReviewsState extends State<RecentReviews> {
                                   ? Row(
                                     children: [
                                       SizedBox(
-                                        child: ReviewCard(review: snapshot.data[0]),
+                                        child: ReviewCard(review: snapshot.data[0], data: widget.data),
                                         width: screenSize.width * 0.95,
                                       )
                                     ],
@@ -81,14 +85,14 @@ class _RecentReviewsState extends State<RecentReviews> {
                                   ? Row(
                                     children: [
                                       SizedBox(
-                                        child: ReviewCard(review: snapshot.data[0]),
+                                        child: ReviewCard(review: snapshot.data[0], data: widget.data),
                                         width: screenSize.width * 0.45,
                                       ),
                                       SizedBox(
                                         width: screenSize.width * 0.05
                                       ),
                                       SizedBox(
-                                        child: ReviewCard(review: snapshot.data[1]),
+                                        child: ReviewCard(review: snapshot.data[1], data: widget.data),
                                         width: screenSize.width * 0.45,
                                       )
                                     ],
@@ -98,21 +102,21 @@ class _RecentReviewsState extends State<RecentReviews> {
                                   : Row(
                                     children: [
                                       SizedBox(
-                                        child: ReviewCard(review: snapshot.data[0]),
+                                        child: ReviewCard(review: snapshot.data[0], data: widget.data),
                                         width: screenSize.width * 0.3,
                                       ),
                                       SizedBox(
                                         width: screenSize.width * 0.025
                                       ),
                                       SizedBox(
-                                        child: ReviewCard(review: snapshot.data[1]),
+                                        child: ReviewCard(review: snapshot.data[1], data: widget.data),
                                         width: screenSize.width * 0.3,
                                       ),
                                       SizedBox(
                                         width: screenSize.width * 0.025
                                       ),
                                       SizedBox(
-                                        child: ReviewCard(review: snapshot.data[2]),
+                                        child: ReviewCard(review: snapshot.data[2], data: widget.data),
                                         width: screenSize.width * 0.3,
                                       )
                                     ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front_end/models/screen_arguments.dart';
 import 'package:flutter_front_end/widgets/game_page/game_grid_view.dart';
 import 'package:flutter_front_end/widgets/game_page/game_selected.dart';
 import 'package:flutter_front_end/widgets/game_page/search_header.dart';
@@ -8,7 +9,7 @@ import 'package:flutter_front_end/widgets/shared/top_bar_contents.dart';
 import 'package:flutter_front_end/widgets/shared/top_bar_drawer.dart';
 
 class GamePage extends StatefulWidget {
-  final int data;
+  final ScreenArguments data;
 
   const GamePage({
     Key? key,
@@ -41,11 +42,20 @@ class _GamePageState extends State<GamePage> {
         appBar: ResponsiveWidget.isSmallScreen(context)
         // Layout for mobile
             ? AppBar(
-          backgroundColor: Colors.indigo,
-          title: const Text(
-            'Golden Console',
-            style: TextStyle(
-                color: Colors.amber
+          backgroundColor: Colors.indigo  ,
+          title: InkWell(
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                  '/',
+                  arguments: widget.data
+              );
+            },
+
+            child: const Text(
+                'Golden Console',
+                style: TextStyle(
+                    color: Colors.amber
+                )
             ),
           ),
         )
@@ -53,11 +63,19 @@ class _GamePageState extends State<GamePage> {
         // Layout for Web
             : PreferredSize(
           preferredSize: Size(screenSize.width, 1000),
-          child: const TopBarContents(),
+          child: TopBarContents(
+            userId: widget.data.userId,
+            username: widget.data.username,
+            logged: widget.data.logged,
+          ),
         ),
 
         // Calls drawer widget
-        drawer: const TopBarDrawer(),
+        drawer: TopBarDrawer(
+          userId: widget.data.userId,
+          username: widget.data.username,
+          logged: widget.data.logged,
+        ),
 
         // Body of the page
         body: SingleChildScrollView(
@@ -68,7 +86,7 @@ class _GamePageState extends State<GamePage> {
                   .of(context)
                   .size
                   .width,
-              child: widget.data == 0 ?
+              child: widget.data.dataId == 0 ?
               Column(
                 children: [
                   SearchHeader(),
@@ -78,7 +96,7 @@ class _GamePageState extends State<GamePage> {
               ) :
               Column(
                 children: [
-                  GameSelected(gameId: widget.data),
+                  GameSelected(gameId: widget.data.dataId),
                   const Footer()
                 ],
               )

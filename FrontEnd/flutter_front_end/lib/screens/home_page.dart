@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_front_end/models/screen_arguments.dart';
 import 'package:flutter_front_end/widgets/home_page/featured_games.dart';
 import 'package:flutter_front_end/widgets/home_page/recent_reviews.dart';
 import 'package:flutter_front_end/widgets/home_page/search_banner.dart';
@@ -8,8 +9,11 @@ import 'package:flutter_front_end/widgets/shared/top_bar_contents.dart';
 import 'package:flutter_front_end/widgets/shared/top_bar_drawer.dart';
 
 class HomePage extends StatefulWidget {
+  final ScreenArguments data;
+
   const HomePage({
-    Key? key
+    Key? key,
+    required this.data
   }) : super(key: key);
 
   @override
@@ -39,10 +43,19 @@ class _HomePageState extends State<HomePage> {
         // Layout for mobile
         ? AppBar(
           backgroundColor: Colors.indigo  ,
-          title: const Text(
-            'Golden Console',
-            style: TextStyle(
-              color: Colors.amber
+          title: InkWell(
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                  '/',
+                  arguments: widget.data
+              );
+            },
+
+            child: const Text(
+              'Golden Console',
+              style: TextStyle(
+                color: Colors.amber
+              )
             ),
           ),
         )
@@ -50,11 +63,19 @@ class _HomePageState extends State<HomePage> {
         // Layout for Web
         : PreferredSize(
           preferredSize: Size(screenSize.width, 1000),
-          child: const TopBarContents(),
+          child: TopBarContents(
+            userId: widget.data.userId,
+            username: widget.data.username,
+            logged: widget.data.logged
+          ),
         ),
 
       // Calls drawer widget
-      drawer: const TopBarDrawer(),
+      drawer: TopBarDrawer(
+        userId: widget.data.userId,
+        username: widget.data.username,
+        logged: widget.data.logged
+      ),
 
       // Body of the page
       body: SingleChildScrollView(
@@ -63,10 +84,10 @@ class _HomePageState extends State<HomePage> {
           child: SizedBox(
             width: MediaQuery.of(context).size.width,
             child: Column(
-              children: const [
+              children: [
                 SearchBanner(),
-                FeaturedGames(),
-                RecentReviews(),
+                FeaturedGames(data: widget.data),
+                RecentReviews(data: widget.data),
                 Footer(),
               ],
             ),

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front_end/models/game.dart';
 import 'package:flutter_front_end/models/review.dart';
+import 'package:flutter_front_end/models/screen_arguments.dart';
 import 'package:flutter_front_end/models/user.dart';
 import 'package:flutter_front_end/widgets/responsive.dart';
 
 class ReviewCard extends StatefulWidget {
 
   final Review review;
+  final ScreenArguments data;
 
   const ReviewCard({
     Key? key,
-    required this.review
+    required this.review,
+    required this.data
   }) : super(key: key);
 
   @override
@@ -42,7 +45,12 @@ class _ReviewCardState extends State<ReviewCard> {
                             onTap: () {
                               Navigator.of(context).pushNamed(
                                 '/user',
-                                arguments: snapshot.data.userId
+                                arguments: ScreenArguments(
+                                  widget.data.username,
+                                  widget.data.userId,
+                                  widget.data.logged,
+                                  widget.review.userId
+                                )
                               );
                             },
                             child: Text(snapshot.data.username)
@@ -89,7 +97,12 @@ class _ReviewCardState extends State<ReviewCard> {
                             onTap: () {
                               Navigator.of(context).pushNamed(
                                 '/game',
-                                arguments: snapshot.data.gameId
+                                arguments: ScreenArguments(
+                                    widget.data.username,
+                                    widget.data.userId,
+                                    widget.data.logged,
+                                    snapshot.data.gameId
+                                )
                               );
                             },
                             child: Row(

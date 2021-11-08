@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front_end/models/game.dart';
+import 'package:flutter_front_end/models/screen_arguments.dart';
 import 'package:flutter_front_end/widgets/text/title_1.dart';
 
 import '../cards/game_card.dart';
 import '../responsive.dart';
 
 class FeaturedGames extends StatefulWidget {
+  final ScreenArguments data;
+
   const FeaturedGames({
-    Key? key
+    Key? key,
+    required this.data
   }) : super(key: key);
 
   @override
@@ -18,6 +22,7 @@ class _FeaturedGamesState extends State<FeaturedGames> {
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
+    List<Game> games = [];
     return SizedBox(
       // Box measurements
       height: screenSize.height * 0.6,
@@ -50,6 +55,11 @@ class _FeaturedGamesState extends State<FeaturedGames> {
                     if (snapshot.hasError) {
                       return Text("Error: ${snapshot.error}. Please, try again later");
                     } else {
+                      games.add(snapshot.data[0]);
+                      games.add(snapshot.data[1]);
+                      games.add(snapshot.data[2]);
+                      games.add(snapshot.data[3]);
+                      games.add(snapshot.data[4]);
                       return Expanded(
                           // Expanded child
                           child: Container(
@@ -69,14 +79,14 @@ class _FeaturedGamesState extends State<FeaturedGames> {
                                 ? Row(
                                   children: [
                                     SizedBox(
-                                      child: GameCard(game: snapshot.data[0]),
+                                      child: GameCard(game: snapshot.data[0], data: widget.data),
                                       width: screenSize.width * 0.45,
                                     ),
                                     SizedBox(
                                       width: screenSize.width * 0.05
                                     ),
                                     SizedBox(
-                                      child: GameCard(game: snapshot.data[1]),
+                                      child: GameCard(game: snapshot.data[1], data: widget.data),
                                       width: screenSize.width * 0.45,
                                     ),
                                   ],
@@ -87,28 +97,28 @@ class _FeaturedGamesState extends State<FeaturedGames> {
                                 ? Row(
                                   children: [
                                     SizedBox(
-                                      child: GameCard(game: snapshot.data[0]),
+                                      child: GameCard(game: snapshot.data[0], data: widget.data),
                                       width: screenSize.width * 0.20,
                                     ),
                                     SizedBox(
                                       width: screenSize.width * 0.05
                                     ),
                                     SizedBox(
-                                      child: GameCard(game: snapshot.data[1]),
+                                      child: GameCard(game: snapshot.data[1], data: widget.data),
                                       width: screenSize.width * 0.20,
                                     ),
                                     SizedBox(
                                       width: screenSize.width * 0.05
                                     ),
                                     SizedBox(
-                                      child: GameCard(game: snapshot.data[2]),
+                                      child: GameCard(game: snapshot.data[2], data: widget.data),
                                       width: screenSize.width * 0.20,
                                     ),
                                     SizedBox(
                                       width: screenSize.width * 0.05
                                     ),
                                     SizedBox(
-                                      child: GameCard(game: snapshot.data[3]),
+                                      child: GameCard(game: snapshot.data[3], data: widget.data),
                                       width: screenSize.width * 0.20,
                                     ),
                                   ],
@@ -118,35 +128,35 @@ class _FeaturedGamesState extends State<FeaturedGames> {
                                 : Row(
                                   children: [
                                     SizedBox(
-                                      child: GameCard(game: snapshot.data[0]),
+                                      child: GameCard(game: snapshot.data[0], data: widget.data),
                                       width: screenSize.width * 0.15,
                                     ),
                                     SizedBox(
                                       width: screenSize.width * 0.05
                                     ),
                                     SizedBox(
-                                      child: GameCard(game: snapshot.data[1]),
+                                      child: GameCard(game: snapshot.data[1], data: widget.data),
                                       width: screenSize.width * 0.15,
                                     ),
                                     SizedBox(
                                       width: screenSize.width * 0.05
                                     ),
                                     SizedBox(
-                                      child: GameCard(game: snapshot.data[2]),
+                                      child: GameCard(game: snapshot.data[2], data: widget.data),
                                       width: screenSize.width * 0.15,
                                     ),
                                     SizedBox(
                                       width: screenSize.width * 0.05
                                     ),
                                     SizedBox(
-                                      child: GameCard(game: snapshot.data[3]),
+                                      child: GameCard(game: snapshot.data[3], data: widget.data),
                                       width: screenSize.width * 0.15,
                                     ),
                                     SizedBox(
                                       width: screenSize.width * 0.05
                                     ),
                                     SizedBox(
-                                      child: GameCard(game: snapshot.data[4]),
+                                      child: GameCard(game: snapshot.data[4], data: widget.data),
                                       width: screenSize.width * 0.15,
                                     ),
                                   ],

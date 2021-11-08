@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'dart:html' as html;
+import 'package:flutter_front_end/models/screen_arguments.dart';
 
 class TopBarContents extends StatefulWidget {
+  final int userId;
+  final String username;
+  final bool logged;
+
   const TopBarContents({
-    Key? key
+    Key? key,
+    required this.userId,
+    required this.username,
+    required this.logged
   }) : super(key: key);
 
   @override
@@ -48,6 +56,12 @@ class _TopBarContentsState extends State<TopBarContents> {
                 onTap: () {
                   Navigator.of(context).pushNamed(
                     '/',
+                    arguments: ScreenArguments(
+                        widget.username,
+                        widget.userId,
+                        widget.logged,
+                        0
+                    )
                   );
                 },
 
@@ -84,10 +98,16 @@ class _TopBarContentsState extends State<TopBarContents> {
                       },
 
                       // onTap to redirect to Games screen
+                      // TODO: fix screen arguments later
                       onTap: () {
                         Navigator.of(context).pushNamed(
-                          '/game',
-                          arguments: 0
+                            '/game',
+                            arguments: ScreenArguments(
+                                widget.username,
+                                widget.userId,
+                                widget.logged,
+                                0
+                            )
                         );
                       },
 
@@ -198,21 +218,41 @@ class _TopBarContentsState extends State<TopBarContents> {
                 },
 
                 // onTap to redirect to SignUp screen
+                // TODO: fix screen arguments later
                 onTap: () {
+                  widget.logged?
+                  Navigator.of(context).pushNamed(
+                    '/user',
+                    arguments: ScreenArguments(
+                        widget.username,
+                        widget.userId,
+                        widget.logged,
+                        widget.userId
+                    )
+                  ):
                   Navigator.of(context).pushNamed(
                     '/register',
                   );
                 },
 
                 // Sets Text and color for InkWell
-                child: Text(
-                  'Sign Up',
-                  style: TextStyle(
-                    color: _isHovering[2]
-                        ? Colors.white
-                        : Colors.white70,
+                child: widget.logged?
+                  Text(
+                    'Welcome ${widget.username}',
+                    style: TextStyle(
+                      color: _isHovering[2]
+                          ? Colors.white
+                          : Colors.white70,
+                    ),
+                  ):
+                  Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      color: _isHovering[2]
+                          ? Colors.white
+                          : Colors.white70,
+                    ),
                   ),
-                ),
               ),
 
               // Divides the previous row children with the next
@@ -236,19 +276,37 @@ class _TopBarContentsState extends State<TopBarContents> {
                 },
 
                 // onTap to redirect to login screen
+                // TODO: fix screen arguments later
                 onTap: () {
+                  widget.logged?
                   Navigator.of(context).pushNamed(
-                    '/register',
+                      '/',
+                      arguments: ScreenArguments(
+                          "",
+                          0,
+                          false,
+                          0
+                      )
+                  ):
+                  Navigator.of(context).pushNamed(
+                      '/register'
                   );
                 },
 
                 // Sets Text and color for InkWell
-                child: Text(
-                  'Login',
-                  style: TextStyle(
-                    color: _isHovering[3] ? Colors.white : Colors.white70,
+                child: widget.logged?
+                  Text(
+                    'Log out',
+                    style: TextStyle(
+                      color: _isHovering[3] ? Colors.white : Colors.white70,
+                    ),
+                  ):
+                  Text(
+                    'Log in',
+                    style: TextStyle(
+                      color: _isHovering[3] ? Colors.white : Colors.white70,
+                    ),
                   ),
-                ),
               ),
             ],
           ),
