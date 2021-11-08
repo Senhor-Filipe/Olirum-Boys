@@ -17,7 +17,9 @@ Code languages being used by this project: **Kotlin**
 ---
 ## File structure
 &nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For the sake of a good organization, the code is divided into some folders for better readability and ease of use. In this section will be located the description for each folder inside the `DatabaseAPI/src/main/kotlin/com/example` directory.
+&nbsp;Remember to keep a good organization of the files. The code is divided into some folders for better readability and ease of use. In this section will be located the description for each folder of this repository.
+
+### DatabaseAPI/src/main/kotlin/com/example` directory
 
 * dao folder
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dao, or Data Access Object, contains the classes used to communicate with database.
@@ -33,6 +35,21 @@ Code languages being used by this project: **Kotlin**
 
 * shared folder
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; File containing the configuration for the database connection.
+
+### `FrontEnd/flutter_front_end/lib` directory
+
+* models folder
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contain the data that builds the models of Game User, Review and ScreenArguments.
+
+* screens folder
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contain the data that builds the pages of the site.
+
+* widget folder
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contain the data that builds the widgets of the site. On this folder, we divided into `cards` which contains the cards to show the Game, Review and Users, `[specific]_page` which contains the body parts of the [specific] screen, `shared` which contains widgets that all screens contain and `text` for Text widgets.
+
+### `FrontEnd/flutter_front_end/assets` directory
+
+*
 
 &nbsp;
 
@@ -170,6 +187,7 @@ Kotlin testing.
 * game_name [varchar] not null | Name of the game
 * developer [varchar] | Developer of the game
 * genre [varchar] | Game genre
+* cover [varchar] | Game cover name file located on FrontEnd/flutter_front_end/assets/images/game_cover/
 
 **Reviews**
 * review_id [INT] not null, auto increment | ID for review identification
@@ -193,6 +211,7 @@ CREATE TABLE olirum_boys.Games (
  	game_name varchar(100) NOT NULL,
  	developer varchar(100),
  	genre varchar(100),
+ 	cover varchar(100),
  	PRIMARY KEY (game_id)
 )
 ENGINE=InnoDB

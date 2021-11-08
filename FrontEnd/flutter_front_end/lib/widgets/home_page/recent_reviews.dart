@@ -24,7 +24,7 @@ class _RecentReviewsState extends State<RecentReviews> {
     var screenSize = MediaQuery.of(context).size;
     return SizedBox(
       // Box measurements
-        height: screenSize.height * 0.6,
+        height: 500,
         width: screenSize.width,
 
         // SizedBox child
@@ -44,6 +44,7 @@ class _RecentReviewsState extends State<RecentReviews> {
               // Divider
               const SizedBox(height: 10),
 
+              //TODO fix future builder reload
               //Second child
               FutureBuilder(
 

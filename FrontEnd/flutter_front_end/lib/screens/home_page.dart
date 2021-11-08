@@ -85,10 +85,10 @@ class _HomePageState extends State<HomePage> {
             width: MediaQuery.of(context).size.width,
             child: Column(
               children: [
-                SearchBanner(),
+                SearchBanner(data: widget.data,),
                 FeaturedGames(data: widget.data),
                 RecentReviews(data: widget.data),
-                Footer(),
+                const Footer(),
               ],
             ),
           )

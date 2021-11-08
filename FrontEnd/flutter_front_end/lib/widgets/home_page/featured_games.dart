@@ -42,6 +42,7 @@ class _FeaturedGamesState extends State<FeaturedGames> {
             // First child
             const Title1(text: "Featured Games"),
 
+            //TODO fix future builder reload
             //Second child
             FutureBuilder(
 
