@@ -24,29 +24,25 @@ Future fetchGameList() async {
   return _data;
 }
 
-class GameResults {
-  List<Game>? gameResults;
+Future fetchGameById(int id) async {
+  Response response = await get(Uri.parse("http://127.0.0.1:8080/game/$id"));
 
-  GameResults({
-    required this.gameResults
-  });
+  final _extractedData = json.decode(response.body) as Map<String, dynamic>;
 
-  GameResults.fromJson(Map<String, dynamic> json) {
-    if (json['game_list'] != null) {
-      gameResults = [];
-      json['game_list'].forEach((v) {
-        gameResults!.add(Game.fromJson(v));
-      });
-    }
-  }
+  Game _data;
+  Game _fetchedData;
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (gameResults != null) {
-      data['game_list'] = gameResults!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+  _fetchedData = Game(
+      gameId: _extractedData['game_id'],
+      gameName: _extractedData['game_name'],
+      developer: _extractedData['developer'],
+      genre: _extractedData['genre'],
+      cover: _extractedData['cover']
+  );
+
+  _data = _fetchedData;
+
+  return _data;
 }
 
 class Game {

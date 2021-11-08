@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 class UserPage extends StatefulWidget {
+  final int data;
+
   const UserPage({
-    Key? key
+    Key? key,
+    required this.data
   }) : super(key: key);
 
   @override

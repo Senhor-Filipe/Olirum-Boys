@@ -87,6 +87,7 @@ class _TopBarContentsState extends State<TopBarContents> {
                       onTap: () {
                         Navigator.of(context).pushNamed(
                           '/game',
+                          arguments: 0
                         );
                       },
 

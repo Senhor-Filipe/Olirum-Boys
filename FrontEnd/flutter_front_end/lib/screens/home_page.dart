@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front_end/widgets/home_page/featured_games.dart';
+import 'package:flutter_front_end/widgets/home_page/recent_reviews.dart';
 import 'package:flutter_front_end/widgets/home_page/search_banner.dart';
 import 'package:flutter_front_end/widgets/responsive.dart';
 import 'package:flutter_front_end/widgets/shared/footer.dart';
@@ -19,8 +20,7 @@ class _HomePageState extends State<HomePage> {
   final ScrollController _scrollController = ScrollController();
 
   _scrollListener() {
-    setState(() {
-    });
+    setState(() {});
   }
 
   @override
@@ -36,22 +36,22 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       // Verifies the screen size of the device to load correct layout
       appBar: ResponsiveWidget.isSmallScreen(context)
-      // Layout for mobile
-          ? AppBar(
-        backgroundColor: Colors.indigo  ,
-        title: const Text(
-          'Golden Console',
-          style: TextStyle(
+        // Layout for mobile
+        ? AppBar(
+          backgroundColor: Colors.indigo  ,
+          title: const Text(
+            'Golden Console',
+            style: TextStyle(
               color: Colors.amber
+            ),
           ),
-        ),
-      )
+        )
 
-      // Layout for Web
-          : PreferredSize(
-        preferredSize: Size(screenSize.width, 1000),
-        child: const TopBarContents(),
-      ),
+        // Layout for Web
+        : PreferredSize(
+          preferredSize: Size(screenSize.width, 1000),
+          child: const TopBarContents(),
+        ),
 
       // Calls drawer widget
       drawer: const TopBarDrawer(),
@@ -66,6 +66,7 @@ class _HomePageState extends State<HomePage> {
               children: const [
                 SearchBanner(),
                 FeaturedGames(),
+                RecentReviews(),
                 Footer(),
               ],
             ),

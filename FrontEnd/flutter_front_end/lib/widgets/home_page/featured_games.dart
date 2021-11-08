@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front_end/models/game.dart';
-import 'package:flutter_front_end/text/title_1.dart';
+import 'package:flutter_front_end/widgets/text/title_1.dart';
 
-import '../game_card.dart';
+import '../cards/game_card.dart';
 import '../responsive.dart';
 
 class FeaturedGames extends StatefulWidget {
@@ -17,88 +17,149 @@ class FeaturedGames extends StatefulWidget {
 class _FeaturedGamesState extends State<FeaturedGames> {
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
     return SizedBox(
       // Box measurements
-      height: MediaQuery.of(context).size.height * 0.4,
-      width: MediaQuery.of(context).size.width,
+      height: screenSize.height * 0.6,
+      width: screenSize.width,
 
       // SizedBox child
-      child: Column(
+      child: Container(
+        color: Colors.black45,
+        child: Column(
 
-        //Columns Children
-        children: <Widget> [
+          //Columns Children
+          children: <Widget> [
 
-          // First child
-          const Title1(text: "Top Games"),
+            // Divider
+            const SizedBox(height: 10),
 
-          //Second child
-          FutureBuilder(
+            // First child
+            const Title1(text: "Featured Games"),
 
-            //FutureBuilder main parameters
-            future: fetchGameList(),
-            builder: (context, AsyncSnapshot snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
-                  return const Text("Loading...");
-                default:
-                  if (snapshot.hasError) {
-                    return Text("Error: ${snapshot.error}");
-                  } else {
-                    return Expanded(
-                        // TODO: Fix image position
-                        // Expanded child
-                        child: Padding(
+            //Second child
+            FutureBuilder(
 
-                            // Padding main parameter
-                            padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 50),
+              //FutureBuilder main parameters
+              future: fetchGameList(),
+              builder: (context, AsyncSnapshot snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return const CircularProgressIndicator();
+                  default:
+                    if (snapshot.hasError) {
+                      return Text("Error: ${snapshot.error}. Please, try again later");
+                    } else {
+                      return Expanded(
+                          // Expanded child
+                          child: Container(
 
-                            // Padding Child
-                            child: ResponsiveWidget.isSmallScreen(context)
+                              // Decorations
+                              padding: EdgeInsets.only(
+                                  left: screenSize.width * 0.025,
+                                  right: screenSize.width * 0.025,
+                                  top: 45.0,
+                                  bottom: 55.0
+                              ),
+
+                              // Padding Child
+                              child: ResponsiveWidget.isSmallScreen(context)
 
                                 // GridView for small Screen
-                              ? GridView.count(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: MediaQuery.of(context).size.width / 70,
+                                ? Row(
                                   children: [
-                                    GameCard(game: snapshot.data[0]),
-                                    GameCard(game: snapshot.data[1])
+                                    SizedBox(
+                                      child: GameCard(game: snapshot.data[0]),
+                                      width: screenSize.width * 0.45,
+                                    ),
+                                    SizedBox(
+                                      width: screenSize.width * 0.05
+                                    ),
+                                    SizedBox(
+                                      child: GameCard(game: snapshot.data[1]),
+                                      width: screenSize.width * 0.45,
+                                    ),
                                   ],
-                              )
+                                )
 
                                 // GridView for medium Screen
                                 : ResponsiveWidget.isMediumScreen(context)
-                                ? GridView.count(
-                                    crossAxisCount: 4,
-                                    crossAxisSpacing: MediaQuery.of(context).size.width / 70,
-                                    children: [
-                                      GameCard(game: snapshot.data[0]),
-                                      GameCard(game: snapshot.data[1]),
-                                      GameCard(game: snapshot.data[2]),
-                                      GameCard(game: snapshot.data[3])
-                                    ],
+                                ? Row(
+                                  children: [
+                                    SizedBox(
+                                      child: GameCard(game: snapshot.data[0]),
+                                      width: screenSize.width * 0.20,
+                                    ),
+                                    SizedBox(
+                                      width: screenSize.width * 0.05
+                                    ),
+                                    SizedBox(
+                                      child: GameCard(game: snapshot.data[1]),
+                                      width: screenSize.width * 0.20,
+                                    ),
+                                    SizedBox(
+                                      width: screenSize.width * 0.05
+                                    ),
+                                    SizedBox(
+                                      child: GameCard(game: snapshot.data[2]),
+                                      width: screenSize.width * 0.20,
+                                    ),
+                                    SizedBox(
+                                      width: screenSize.width * 0.05
+                                    ),
+                                    SizedBox(
+                                      child: GameCard(game: snapshot.data[3]),
+                                      width: screenSize.width * 0.20,
+                                    ),
+                                  ],
                                 )
 
                                 // GridView for large screen
-                                : GridView.count(
-                                    crossAxisCount: 6,
-                                    crossAxisSpacing: MediaQuery.of(context).size.width / 70,
-                                    children: [
-                                      GameCard(game: snapshot.data[0]),
-                                      GameCard(game: snapshot.data[1]),
-                                      GameCard(game: snapshot.data[2]),
-                                      GameCard(game: snapshot.data[3]),
-                                      GameCard(game: snapshot.data[4]),
-                                      GameCard(game: snapshot.data[5])
-                                    ]
+                                : Row(
+                                  children: [
+                                    SizedBox(
+                                      child: GameCard(game: snapshot.data[0]),
+                                      width: screenSize.width * 0.15,
+                                    ),
+                                    SizedBox(
+                                      width: screenSize.width * 0.05
+                                    ),
+                                    SizedBox(
+                                      child: GameCard(game: snapshot.data[1]),
+                                      width: screenSize.width * 0.15,
+                                    ),
+                                    SizedBox(
+                                      width: screenSize.width * 0.05
+                                    ),
+                                    SizedBox(
+                                      child: GameCard(game: snapshot.data[2]),
+                                      width: screenSize.width * 0.15,
+                                    ),
+                                    SizedBox(
+                                      width: screenSize.width * 0.05
+                                    ),
+                                    SizedBox(
+                                      child: GameCard(game: snapshot.data[3]),
+                                      width: screenSize.width * 0.15,
+                                    ),
+                                    SizedBox(
+                                      width: screenSize.width * 0.05
+                                    ),
+                                    SizedBox(
+                                      child: GameCard(game: snapshot.data[4]),
+                                      width: screenSize.width * 0.15,
+                                    ),
+                                  ],
                                 )
-                        )
-                    );
-                  }
-              }
-            },
-          )
-        ],
-      ),
+                          )
+                      );
+                    }
+                }
+              },
+            )
+          ],
+        ),
+      )
     );
   }
 }

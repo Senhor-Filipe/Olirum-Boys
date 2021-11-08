@@ -16,7 +16,7 @@ fun Route.userRouting() {
         }
 
         get("{user_id}") {
-            val userId = call.parameters["userId"] ?: return@get call.respondText(
+            val userId = call.parameters["user_id"] ?: return@get call.respondText(
                 "Missing or malformed id",
                 status = HttpStatusCode.BadRequest
             )

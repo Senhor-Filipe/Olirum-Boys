@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_front_end/text/banner_text.dart';
+import 'package:flutter_front_end/widgets/text/banner_text.dart';
 
 class SearchBanner extends StatelessWidget {
   const SearchBanner({

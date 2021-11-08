@@ -6,15 +6,30 @@ import 'package:flutter_front_end/screens/user_page.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    final args = settings.arguments;
     switch (settings.name) {
       case '/':
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const HomePage());
       case '/register':
         return PageRouteBuilder(pageBuilder: (_, __, ___) => const RegisterPage());
       case '/game':
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const GamePage());
+        if (args is int) {
+          return MaterialPageRoute(
+            builder: (_) => GamePage(
+              data: args,
+            ),
+          );
+        }
+        return _errorRoute();
       case '/user':
-        return PageRouteBuilder(pageBuilder: (_, __, ___) => const UserPage());
+        if (args is int) {
+          return MaterialPageRoute(
+            builder: (_) => UserPage(
+              data: args,
+            ),
+          );
+        }
+        return _errorRoute();
       default:
         return _errorRoute();
     }

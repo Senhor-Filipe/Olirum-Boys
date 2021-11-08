@@ -23,6 +23,7 @@ class TopBarDrawer extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).pushNamed(
                     '/game',
+                    arguments: 0
                   );
                 },
                 child: const Text(
