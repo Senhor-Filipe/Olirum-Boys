@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart';
 
-Future fetchGameList() async {
+Future<List<Game>> fetchGameList() async {
   Response response = await get(Uri.parse("http://127.0.0.1:8080/game"));
 
   final _extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -24,7 +24,7 @@ Future fetchGameList() async {
   return _data;
 }
 
-Future fetchGameById(int id) async {
+Future<Game> fetchGameById(int id) async {
   Response response = await get(Uri.parse("http://127.0.0.1:8080/game/$id"));
 
   final _extractedData = json.decode(response.body) as Map<String, dynamic>;

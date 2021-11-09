@@ -98,7 +98,6 @@ class _TopBarContentsState extends State<TopBarContents> {
                       },
 
                       // onTap to redirect to Games screen
-                      // TODO: fix screen arguments later
                       onTap: () {
                         Navigator.of(context).pushNamed(
                             '/game',

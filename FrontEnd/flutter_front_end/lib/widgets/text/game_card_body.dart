@@ -14,18 +14,16 @@ class GameCardBody extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 0),
       child: Column(
         children: [
-          // TODO Find a substitute for this monstrosity here
           const Expanded(
             child: Text(""),
           ),
           Stack(
               children: [
                 Container(
-                  color: Colors.black,
+                  color: Colors.black.withOpacity(0.7),
                   width: 300,
-                  height: 40,
-                  child: Text("")
-                      ),
+                  height: 40
+                ),
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: Center(

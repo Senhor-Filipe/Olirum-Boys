@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart';
 
-Future fetchReviewList() async {
+Future<List<Review>> fetchReviewList() async {
   Response response = await get(Uri.parse("http://127.0.0.1:8080/review"));
 
   final _extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -23,7 +23,29 @@ Future fetchReviewList() async {
   return _data;
 }
 
-Future fetchReviewById(int id) async {
+Future<List<Review>> fetchReviewListByGameId(int id) async {
+  Response response = await get(Uri.parse("http://127.0.0.1:8080/game/review/$id"));
+
+  final _extractedData = json.decode(response.body) as Map<String, dynamic>;
+
+  List<Review> _data = [];
+  List<Review> _fetchedData = [];
+
+  _extractedData['review_list'].forEach((value) {
+    _fetchedData.add(Review(
+        reviewId: value['review_id'],
+        userId: value['user_id'],
+        gameId: value['game_id'],
+        reviewBody: value['review_body'],
+        score: value['score']));
+  });
+
+  _data = _fetchedData;
+
+  return _data;
+}
+
+Future<Review> fetchReviewById(int id) async {
   Response response = await get(Uri.parse("http://127.0.0.1:8080/review/$id"));
 
   final _extractedData = json.decode(response.body) as Map<String, dynamic>;

@@ -82,21 +82,18 @@ class _GamePageState extends State<GamePage> {
           controller: _scrollController,
           physics: const ClampingScrollPhysics(),
           child: SizedBox(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
+              width: MediaQuery.of(context).size.width,
               child: widget.data.dataId == 0 ?
               Column(
                 children: [
-                  SearchHeader(),
-                  GameGridView(),
+                  SearchHeader(data: widget.data),
+                  GameGridView(data: widget.data),
                   const Footer(),
                 ],
               ) :
               Column(
                 children: [
-                  GameSelected(gameId: widget.data.dataId),
+                  GameSelected(data: widget.data),
                   const Footer()
                 ],
               )

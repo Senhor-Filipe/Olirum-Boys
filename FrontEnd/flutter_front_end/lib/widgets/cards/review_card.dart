@@ -21,6 +21,9 @@ class ReviewCard extends StatefulWidget {
 }
 
 class _ReviewCardState extends State<ReviewCard> {
+  User? user;
+  Game? game;
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -30,32 +33,33 @@ class _ReviewCardState extends State<ReviewCard> {
           children: [
             Row(
               children: [
-                FutureBuilder(
+                FutureBuilder<User>(
                   future: fetchUserById(widget.review.userId),
-                  builder: (context, AsyncSnapshot snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return const CircularProgressIndicator();
-                      default:
-                        if (snapshot.hasError) {
-                          return Text("Error: ${snapshot.error}. Please, try again later");
-                        } else {
-                          return InkWell(
-                            hoverColor: Colors.transparent,
-                            onTap: () {
-                              Navigator.of(context).pushNamed(
-                                '/user',
-                                arguments: ScreenArguments(
-                                  widget.data.username,
-                                  widget.data.userId,
-                                  widget.data.logged,
-                                  widget.review.userId
-                                )
-                              );
-                            },
-                            child: Text(snapshot.data.username)
+                  builder: (context, AsyncSnapshot<User> snapshot) {
+                    user = snapshot.data;
+                    if (user == null) {
+                      return const Expanded(
+                        child: Text("Loading...")
+                      );
+                    }
+                    if (snapshot.hasError) {
+                      return Text("Error: ${snapshot.error}. Please, try again later");
+                    } else {
+                      return InkWell(
+                        hoverColor: Colors.transparent,
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                            '/user',
+                            arguments: ScreenArguments(
+                              widget.data.username,
+                              widget.data.userId,
+                              widget.data.logged,
+                              widget.review.userId
+                            )
                           );
-                        }
+                        },
+                        child: Text(user!.username)
+                      );
                     }
                   }
                 ),
@@ -82,41 +86,40 @@ class _ReviewCardState extends State<ReviewCard> {
             Row(
               children: [
                 const Expanded(child: Text("")),
-                FutureBuilder(
+                FutureBuilder<Game>(
                   future: fetchGameById(widget.review.gameId),
-                  builder: (context, AsyncSnapshot snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return const CircularProgressIndicator();
-                      default:
-                        if (snapshot.hasError) {
-                          return Text("Error: ${snapshot.error}. Please, try again later");
-                        } else {
-                          return InkWell(
-                            hoverColor: Colors.transparent,
-                            onTap: () {
-                              Navigator.of(context).pushNamed(
-                                '/game',
-                                arguments: ScreenArguments(
-                                    widget.data.username,
-                                    widget.data.userId,
-                                    widget.data.logged,
-                                    snapshot.data.gameId
-                                )
-                              );
-                            },
-                            child: Row(
-                              children: [
-                                Text(snapshot.data.gameName),
-                                const SizedBox(width: 20),
-                                Image(
-                                  image: AssetImage("assets/images/game_cover/${snapshot.data.cover}"),
-                                  height: 50,
-                                )
-                              ],
+                  builder: (context, AsyncSnapshot<Game> snapshot) {
+                    game = snapshot.data;
+                    if (game == null) {
+                      return Container();
+                    }
+                    if (snapshot.hasError) {
+                      return Text("Error: ${snapshot.error}. Please, try again later");
+                    } else {
+                      return InkWell(
+                        hoverColor: Colors.transparent,
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                            '/game',
+                            arguments: ScreenArguments(
+                                widget.data.username,
+                                widget.data.userId,
+                                widget.data.logged,
+                                game!.gameId
                             )
                           );
-                        }
+                        },
+                        child: Row(
+                          children: [
+                            Text(game!.gameName),
+                            const SizedBox(width: 20),
+                            Image(
+                              image: AssetImage("assets/images/game_cover/${game!.cover}"),
+                              height: 50,
+                            )
+                          ],
+                        )
+                      );
                     }
                   }
                 )

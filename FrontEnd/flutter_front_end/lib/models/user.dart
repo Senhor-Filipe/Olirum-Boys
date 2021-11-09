@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart';
 
-Future fetchUserList() async {
+Future<List<User>> fetchUserList() async {
   Response response = await get(Uri.parse("http://127.0.0.1:8080/user"));
 
   final _extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -22,7 +22,7 @@ Future fetchUserList() async {
   return _data;
 }
 
-Future fetchUserById(int id) async {
+Future<User> fetchUserById(int id) async {
   Response response = await get(Uri.parse("http://127.0.0.1:8080/user/$id"));
 
   final _extractedData = json.decode(response.body) as Map<String, dynamic>;
