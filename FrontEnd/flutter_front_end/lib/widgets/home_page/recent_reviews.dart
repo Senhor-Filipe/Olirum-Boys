@@ -19,7 +19,7 @@ class RecentReviews extends StatefulWidget {
 }
 
 class _RecentReviewsState extends State<RecentReviews> {
-  List<Review>? _reviewList = [];
+  List<Review> reviews = [];
 
   @override
   Widget build(BuildContext context) {
@@ -52,84 +52,94 @@ class _RecentReviewsState extends State<RecentReviews> {
                 //FutureBuilder main parameters
                 future: fetchReviewList(),
                 builder: (context, AsyncSnapshot<List<Review>> snapshot) {
-                  _reviewList = snapshot.data;
-                  if (_reviewList == null) {
-                    return const Expanded(
-                      child: Center(
-                        child: Text("Loading...")
-                      )
-                    );
-                  }
-                  if (snapshot.hasError) {
-                    return Text("Error: ${snapshot.error}. Please, try again later");
-                  } else {
-                    return Expanded(
-                      // Expanded child
-                      child: Container(
-
-                        // Decorations
-                        padding: EdgeInsets.symmetric(
-                          horizontal: screenSize.width * 0.025,
-                          vertical: 50.0
+                  if (snapshot.hasData) {
+                    if (snapshot.hasError) {
+                      return Flexible(
+                        child: Center(
+                          child: Text(
+                            "Error: ${snapshot.error}. Please, try again later",
+                            overflow: TextOverflow.ellipsis,
+                          )
                         ),
+                      );
+                    } else {
+                      reviews = snapshot.data!;
+                      return Expanded(
+                        // Expanded child
+                        child: Container(
 
-                        // Padding Child
-                        child: ResponsiveWidget.isSmallScreen(context)
+                          // Decorations
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenSize.width * 0.025,
+                            vertical: 50.0
+                          ),
 
-                          // GridView for small Screen
-                          ? Row(
-                            children: [
-                              SizedBox(
-                                child: ReviewCard(review: _reviewList![0], data: widget.data),
-                                width: screenSize.width * 0.95,
-                              )
-                            ],
-                          )
+                          // Padding Child
+                          child: ResponsiveWidget.isSmallScreen(context)?
 
-                          // GridView for medium Screen
-                          : ResponsiveWidget.isMediumScreen(context)
-                          ? Row(
-                            children: [
-                              SizedBox(
-                                child: ReviewCard(review: _reviewList![0], data: widget.data),
-                                width: screenSize.width * 0.45,
-                              ),
-                              SizedBox(
-                                width: screenSize.width * 0.05
-                              ),
-                              SizedBox(
-                                child: ReviewCard(review: _reviewList![1], data: widget.data),
-                                width: screenSize.width * 0.45,
-                              )
-                            ],
-                          )
+                            // GridView for small Screen
+                            Row(
+                              children: [
+                                SizedBox(
+                                  child: ReviewCard(review: reviews[0], data: widget.data),
+                                  width: screenSize.width * 0.95,
+                                )
+                              ],
+                            ):
 
-                          // GridView for large screen
-                          : Row(
-                            children: [
-                              SizedBox(
-                                child: ReviewCard(review: _reviewList![0], data: widget.data),
-                                width: screenSize.width * 0.3,
-                              ),
-                              SizedBox(
-                                width: screenSize.width * 0.025
-                              ),
-                              SizedBox(
-                                child: ReviewCard(review: _reviewList![1], data: widget.data),
-                                width: screenSize.width * 0.3,
-                              ),
-                              SizedBox(
-                                width: screenSize.width * 0.025
-                              ),
-                              SizedBox(
-                                child: ReviewCard(review: _reviewList![2], data: widget.data),
-                                width: screenSize.width * 0.3,
-                              )
-                            ],
-                          )
-                      )
-                    );
+                            // GridView for medium Screen
+                            ResponsiveWidget.isMediumScreen(context)?
+                            Row(
+                              children: [
+                                SizedBox(
+                                  child: ReviewCard(review: reviews[0], data: widget.data),
+                                  width: screenSize.width * 0.45,
+                                ),
+                                SizedBox(
+                                  width: screenSize.width * 0.05
+                                ),
+                                SizedBox(
+                                  child: ReviewCard(review: reviews[1], data: widget.data),
+                                  width: screenSize.width * 0.45,
+                                )
+                              ],
+                            ):
+
+                            // GridView for large screen
+                            Row(
+                              children: [
+                                SizedBox(
+                                  child: ReviewCard(review: reviews[0], data: widget.data),
+                                  width: screenSize.width * 0.3,
+                                ),
+                                SizedBox(
+                                    width: screenSize.width * 0.025
+                                ),
+                                SizedBox(
+                                  child: ReviewCard(review: reviews[1], data: widget.data),
+                                  width: screenSize.width * 0.3,
+                                ),
+                                SizedBox(
+                                    width: screenSize.width * 0.025
+                                ),
+                                SizedBox(
+                                  child: ReviewCard(review: reviews[2], data: widget.data),
+                                  width: screenSize.width * 0.3,
+                                )
+                              ],
+                            )
+                        )
+                      );
+                    }
                   }
+                  return const Flexible(
+                    child: Center(
+                      child: Text(
+                        "No review has been found on the database!",
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    )
+                  );
                 },
               )
             ],

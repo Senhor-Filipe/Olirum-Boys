@@ -49,7 +49,7 @@ class _GameCardState extends State<GameCard> {
               alignment: Alignment.topCenter,
             ),
           ),
-          child: GameCardBody(game: widget.game)
+          child: GameCardBody(game:widget.game)
         ),
         color: Colors.transparent,
         elevation: 0,

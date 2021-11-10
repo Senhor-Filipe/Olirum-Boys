@@ -36,31 +36,40 @@ class _ReviewCardState extends State<ReviewCard> {
                 FutureBuilder<User>(
                   future: fetchUserById(widget.review.userId),
                   builder: (context, AsyncSnapshot<User> snapshot) {
-                    user = snapshot.data;
-                    if (user == null) {
-                      return const Expanded(
-                        child: Text("Loading...")
-                      );
+                    if (snapshot.hasData) {
+                      if (snapshot.hasError) {
+                        return Flexible(
+                          child: Center(
+                              child: Text(
+                                "Error: ${snapshot.error}. Please, try again later",
+                                overflow: TextOverflow.ellipsis,
+                              )
+                          ),
+                        );
+                      } else {
+                        user = snapshot.data;
+                        return InkWell(
+                          hoverColor: Colors.transparent,
+                          onTap: () {
+                            Navigator.of(context).pushNamed('/user',
+                              arguments: ScreenArguments(
+                                widget.data.username,
+                                widget.data.userId,
+                                widget.data.logged,
+                                widget.review.userId));
+                          },
+                          child: Text(user!.username)
+                        );
+                      }
                     }
-                    if (snapshot.hasError) {
-                      return Text("Error: ${snapshot.error}. Please, try again later");
-                    } else {
-                      return InkWell(
-                        hoverColor: Colors.transparent,
-                        onTap: () {
-                          Navigator.of(context).pushNamed(
-                            '/user',
-                            arguments: ScreenArguments(
-                              widget.data.username,
-                              widget.data.userId,
-                              widget.data.logged,
-                              widget.review.userId
-                            )
-                          );
-                        },
-                        child: Text(user!.username)
-                      );
-                    }
+                    return const Flexible(
+                      child: Center(
+                        child: Text(
+                          "NO DATA",
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )
+                    );
                   }
                 ),
                 const Expanded(child: Text("")),
@@ -89,38 +98,52 @@ class _ReviewCardState extends State<ReviewCard> {
                 FutureBuilder<Game>(
                   future: fetchGameById(widget.review.gameId),
                   builder: (context, AsyncSnapshot<Game> snapshot) {
-                    game = snapshot.data;
-                    if (game == null) {
-                      return Container();
-                    }
-                    if (snapshot.hasError) {
-                      return Text("Error: ${snapshot.error}. Please, try again later");
-                    } else {
-                      return InkWell(
-                        hoverColor: Colors.transparent,
-                        onTap: () {
-                          Navigator.of(context).pushNamed(
-                            '/game',
-                            arguments: ScreenArguments(
+                    if (snapshot.hasData) {
+                      if (snapshot.hasError) {
+                        return Flexible(
+                          child: Center(
+                            child: Text(
+                              "Error: ${snapshot.error}. Please, try again later",
+                              overflow: TextOverflow.ellipsis,
+                            )
+                          ),
+                        );
+                      } else {
+                        game = snapshot.data;
+                        return InkWell(
+                          hoverColor: Colors.transparent,
+                          onTap: () {
+                            Navigator.of(context).pushNamed(
+                              '/game',
+                              arguments: ScreenArguments(
                                 widget.data.username,
                                 widget.data.userId,
                                 widget.data.logged,
                                 game!.gameId
-                            )
-                          );
-                        },
-                        child: Row(
-                          children: [
-                            Text(game!.gameName),
-                            const SizedBox(width: 20),
-                            Image(
-                              image: AssetImage("assets/images/game_cover/${game!.cover}"),
-                              height: 50,
-                            )
-                          ],
-                        )
-                      );
+                              )
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              Text(game!.gameName),
+                              const SizedBox(width: 20),
+                              Image(
+                                image: AssetImage("assets/images/game_cover/${game!.cover}"),
+                                height: 50,
+                              )
+                            ],
+                          )
+                        );
+                      }
                     }
+                    return const Flexible(
+                      child: Center(
+                        child: Text(
+                          "NO DATA",
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )
+                    );
                   }
                 )
               ],

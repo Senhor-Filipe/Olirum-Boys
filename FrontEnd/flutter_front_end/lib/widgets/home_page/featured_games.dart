@@ -19,7 +19,14 @@ class FeaturedGames extends StatefulWidget {
 }
 
 class _FeaturedGamesState extends State<FeaturedGames> {
-  List<Game>? games;
+  List<Game> games = [];
+  Game gameDefault = Game(
+      gameId: 0,
+      gameName: "NO DATA",
+      developer: "NO DATA",
+      genre: "NO DATA",
+      cover: "no_cover.jpg"
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -48,125 +55,168 @@ class _FeaturedGamesState extends State<FeaturedGames> {
               //FutureBuilder main parameters
               future: fetchGameList(),
               builder: (context, AsyncSnapshot<List<Game>> snapshot) {
-                games = snapshot.data;
-                if (games == null) {
-                  return const Expanded(
-                    child: Center(
-                      child: Text("Loading..."),
-                    )
-                  );
-                }
-                if (snapshot.hasError) {
-                  return Expanded(
-                    child: Center(
-                      child: Text("Error: ${snapshot.error}. Please, try again later")
-                    ),
-                  );
-                } else {
-                  return Expanded(
+                if (snapshot.hasData) {
+                  if (snapshot.hasError) {
+                    return Flexible(
+                      child: Center(
+                        child: Text(
+                          "Error: ${snapshot.error}. Please, try again later",
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      ),
+                    );
+                  } else {
+                    games = snapshot.data!;
+                    if (games.length < 5) {
+                      games.add(gameDefault);
+                      games.add(gameDefault);
+                      games.add(gameDefault);
+                      games.add(gameDefault);
+                      games.add(gameDefault);
+                    }
+                    return Expanded(
                       // Expanded child
                       child: Container(
 
-                          // Decorations
-                          padding: EdgeInsets.only(
-                              left: screenSize.width * 0.025,
-                              right: screenSize.width * 0.025,
-                              top: 45.0,
-                              bottom: 55.0
-                          ),
+                        // Decorations
+                        padding: EdgeInsets.only(
+                          left: screenSize.width * 0.025,
+                          right: screenSize.width * 0.025,
+                          top: 45.0,
+                          bottom: 55.0),
 
-                          // Padding Child
-                          child: ResponsiveWidget.isSmallScreen(context)
+                        // Padding Child
+                        child: ResponsiveWidget.isSmallScreen(context)?
 
-                            // GridView for small Screen
-                            ? Row(
-                              children: [
-                                SizedBox(
-                                  child: GameCard(game: snapshot.data![0], data: widget.data),
-                                  width: screenSize.width * 0.45,
+                          // GridView for small Screen
+                          Row(
+                            children: [
+                              SizedBox(
+                                child: GameCard(
+                                  game: games[0],
+                                  data: widget.data
                                 ),
-                                SizedBox(
-                                  width: screenSize.width * 0.05
+                                width: screenSize.width * 0.45,
+                              ),
+                              SizedBox(
+                                width: screenSize.width * 0.05
+                              ),
+                              SizedBox(
+                                child: GameCard(
+                                  game: games[1],
+                                  data: widget.data
                                 ),
-                                SizedBox(
-                                  child: GameCard(game: snapshot.data![1], data: widget.data),
-                                  width: screenSize.width * 0.45,
-                                ),
-                              ],
-                            )
+                                width: screenSize.width * 0.45,
+                              ),
+                            ],
+                          ):
 
-                            // GridView for medium Screen
-                            : ResponsiveWidget.isMediumScreen(context)
-                            ? Row(
-                              children: [
-                                SizedBox(
-                                  child: GameCard(game: snapshot.data![0], data: widget.data),
-                                  width: screenSize.width * 0.20,
+                          // GridView for medium Screen
+                          ResponsiveWidget.isMediumScreen(context)?
+                          Row(
+                            children: [
+                              SizedBox(
+                                child: GameCard(
+                                  game: games[0],
+                                  data: widget.data
                                 ),
-                                SizedBox(
-                                  width: screenSize.width * 0.05
+                                width: screenSize.width * 0.20,
+                              ),
+                              SizedBox(
+                                width: screenSize.width * 0.05
+                              ),
+                              SizedBox(
+                                child: GameCard(
+                                  game: games[1],
+                                  data: widget.data
                                 ),
-                                SizedBox(
-                                  child: GameCard(game: snapshot.data![1], data: widget.data),
-                                  width: screenSize.width * 0.20,
+                                width: screenSize.width * 0.20,
+                              ),
+                              SizedBox(
+                                width: screenSize.width * 0.05
+                              ),
+                              SizedBox(
+                                child: GameCard(
+                                  game: games[2],
+                                  data: widget.data
                                 ),
-                                SizedBox(
-                                  width: screenSize.width * 0.05
-                                ),
-                                SizedBox(
-                                  child: GameCard(game: snapshot.data![2], data: widget.data),
-                                  width: screenSize.width * 0.20,
-                                ),
-                                SizedBox(
-                                  width: screenSize.width * 0.05
-                                ),
-                                SizedBox(
-                                  child: GameCard(game: snapshot.data![3], data: widget.data),
-                                  width: screenSize.width * 0.20,
-                                ),
-                              ],
-                            )
+                                width: screenSize.width * 0.20,
+                              ),
+                              SizedBox(
+                                width: screenSize.width * 0.05
+                              ),
+                              SizedBox(
+                                child: GameCard(
+                                  game: games[3],
+                                  data: widget.data),
+                                width: screenSize.width * 0.20,
+                              ),
+                            ],
+                          ):
 
-                            // GridView for large screen
-                            : Row(
-                              children: [
-                                SizedBox(
-                                  child: GameCard(game: snapshot.data![0], data: widget.data),
-                                  width: screenSize.width * 0.15,
+                          // GridView for large screen
+                          Row(
+                            children: [
+                              SizedBox(
+                                child: GameCard(
+                                  game: games[0],
+                                  data: widget.data
                                 ),
-                                SizedBox(
-                                  width: screenSize.width * 0.05
+                                width: screenSize.width * 0.15,
+                              ),
+                              SizedBox(
+                                width: screenSize.width * 0.05
+                              ),
+                              SizedBox(
+                                child: GameCard(
+                                  game: games[1],
+                                  data: widget.data
                                 ),
-                                SizedBox(
-                                  child: GameCard(game: snapshot.data![1], data: widget.data),
-                                  width: screenSize.width * 0.15,
+                                width: screenSize.width * 0.15,
+                              ),
+                              SizedBox(
+                                width: screenSize.width * 0.05
+                              ),
+                              SizedBox(
+                                child: GameCard(
+                                  game: games[2],
+                                  data: widget.data
                                 ),
-                                SizedBox(
-                                  width: screenSize.width * 0.05
+                                width: screenSize.width * 0.15,
+                              ),
+                              SizedBox(
+                                width: screenSize.width * 0.05
+                              ),
+                              SizedBox(
+                                child: GameCard(
+                                  game: games[3],
+                                  data: widget.data
                                 ),
-                                SizedBox(
-                                  child: GameCard(game: snapshot.data![2], data: widget.data),
-                                  width: screenSize.width * 0.15,
-                                ),
-                                SizedBox(
-                                  width: screenSize.width * 0.05
-                                ),
-                                SizedBox(
-                                  child: GameCard(game: snapshot.data![3], data: widget.data),
-                                  width: screenSize.width * 0.15,
-                                ),
-                                SizedBox(
-                                  width: screenSize.width * 0.05
-                                ),
-                                SizedBox(
-                                  child: GameCard(game: snapshot.data![4], data: widget.data),
-                                  width: screenSize.width * 0.15,
-                                ),
-                              ],
-                            )
+                                width: screenSize.width * 0.15,
+                              ),
+                              SizedBox(
+                                width: screenSize.width * 0.05
+                              ),
+                              SizedBox(
+                                child: GameCard(
+                                  game: games[4],
+                                  data: widget.data),
+                                width: screenSize.width * 0.15,
+                              ),
+                            ],
+                          )
                       )
-                  );
+                    );
+                  }
                 }
+                return const Flexible(
+                    child: Center(
+                      child: Text(
+                        "No game has been found on the database!",
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    )
+                );
               },
             )
           ],
