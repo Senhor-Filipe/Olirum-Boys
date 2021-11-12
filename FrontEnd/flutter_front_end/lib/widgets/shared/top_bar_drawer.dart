@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'dart:html' as html;
 
 import 'package:flutter_front_end/models/screen_arguments.dart';
+import 'package:flutter_front_end/models/user.dart';
 
 class TopBarDrawer extends StatefulWidget {
-  final String username;
-  final int userId;
+  final User user;
   final bool logged;
 
   const TopBarDrawer({
     Key? key,
-    required this.username,
-    required this.userId,
+    required this.user,
     required this.logged,
   }) : super(key: key);
 
@@ -37,8 +36,7 @@ class _TopBarDrawerState extends State<TopBarDrawer> {
                   Navigator.of(context).pushNamed(
                       '/game',
                       arguments: ScreenArguments(
-                          widget.username,
-                          widget.userId,
+                          widget.user,
                           widget.logged,
                           0
                       )
@@ -80,8 +78,7 @@ class _TopBarDrawerState extends State<TopBarDrawer> {
                   Navigator.of(context).pushNamed(
                       '/user',
                       arguments: ScreenArguments(
-                          widget.username,
-                          widget.userId,
+                          widget.user,
                           widget.logged,
                           0
                       )
@@ -93,7 +90,7 @@ class _TopBarDrawerState extends State<TopBarDrawer> {
 
                 child: widget.logged?
                   Text(
-                    'Welcome ${widget.username}',
+                    'Welcome ${widget.user.username}',
                     style: const TextStyle(color: Colors.white, fontSize: 20),
                   ):
                   const Text(
@@ -108,12 +105,11 @@ class _TopBarDrawerState extends State<TopBarDrawer> {
                 onTap: () {
                   widget.logged?
                   Navigator.of(context).pushNamed(
-                      '/user',
+                      '/',
                       arguments: ScreenArguments(
-                        widget.username,
-                        widget.userId,
-                        widget.logged,
-                        widget.userId
+                          User(userId: 0, username: "NO_DATA", pwd: "NO_DATA"),
+                          false,
+                          0
                       )
                   ):
                   Navigator.of(context).pushNamed(
@@ -121,12 +117,12 @@ class _TopBarDrawerState extends State<TopBarDrawer> {
                   );
                 },
                 child: widget.logged?
-                Text(
-                  'Welcome ${widget.username}',
-                  style: const TextStyle(color: Colors.white, fontSize: 20),
+                const Text(
+                  'Log out',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
                 ):
                 const Text(
-                  'Login',
+                  'Log in',
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ),

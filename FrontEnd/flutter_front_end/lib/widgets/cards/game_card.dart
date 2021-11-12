@@ -28,8 +28,7 @@ class _GameCardState extends State<GameCard> {
         Navigator.of(context).pushNamed(
           '/game',
           arguments: ScreenArguments(
-              widget.data.username,
-              widget.data.userId,
+              widget.data.user,
               widget.data.logged,
               widget.game.gameId
           )

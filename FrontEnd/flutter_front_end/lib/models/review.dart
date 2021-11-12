@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'package:flutter_front_end/models/user.dart';
 import 'package:http/http.dart';
+
+import 'game.dart';
 
 Future<List<Review>> fetchReviewList() async {
   Response response = await get(Uri.parse("http://127.0.0.1:8080/review"));
@@ -12,8 +15,18 @@ Future<List<Review>> fetchReviewList() async {
   _extractedData['review_list'].forEach((value) {
     _fetchedData.add(Review(
         reviewId: value['review_id'],
-        userId: value['user_id'],
-        gameId: value['game_id'],
+        user: User(
+          userId: value['user']['user_id'],
+          username: value['user']['user_name'].toString(),
+          pwd: value['user']['user_pwd'].toString()
+        ),
+        game: Game(
+          gameId: value['game']['game_id'],
+          gameName: value['game']['game_name'],
+          developer: value['game']['developer'],
+          genre: value['game']['genre'],
+          cover: value['game']['cover']
+        ),
         reviewBody: value['review_body'],
         score: value['score']));
   });
@@ -34,8 +47,18 @@ Future<List<Review>> fetchReviewListByGameId(int id) async {
   _extractedData['review_list'].forEach((value) {
     _fetchedData.add(Review(
         reviewId: value['review_id'],
-        userId: value['user_id'],
-        gameId: value['game_id'],
+        user: User(
+            userId: value['user']['user_id'],
+            username: value['user']['user_name'].toString(),
+            pwd: value['user']['user_pwd'].toString()
+        ),
+        game: Game(
+            gameId: value['game']['game_id'],
+            gameName: value['game']['game_name'],
+            developer: value['game']['developer'],
+            genre: value['game']['genre'],
+            cover: value['game']['cover']
+        ),
         reviewBody: value['review_body'],
         score: value['score']));
   });
@@ -55,8 +78,18 @@ Future<Review> fetchReviewById(int id) async {
 
   _fetchedData = Review(
       reviewId: _extractedData['review_id'],
-      userId: _extractedData['user_id'],
-      gameId: _extractedData['game_id'],
+      user: User(
+          userId: _extractedData['user']['user_id'],
+          username: _extractedData['user']['user_name'].toString(),
+          pwd: _extractedData['user']['user_pwd'].toString()
+      ),
+      game: Game(
+          gameId: _extractedData['game']['game_id'],
+          gameName: _extractedData['game']['game_name'],
+          developer: _extractedData['game']['developer'],
+          genre: _extractedData['game']['genre'],
+          cover: _extractedData['game']['cover']
+      ),
       reviewBody: _extractedData['review_body'],
       score: _extractedData['score']
   );
@@ -68,15 +101,15 @@ Future<Review> fetchReviewById(int id) async {
 
 class Review {
   int reviewId;
-  int userId;
-  int gameId;
+  User? user;
+  Game? game;
   String reviewBody;
   int score;
 
   Review({
     required this.reviewId,
-    required this.userId,
-    required this.gameId,
+    required this.user,
+    required this.game,
     required this.reviewBody,
     required this.score
   });
@@ -84,8 +117,8 @@ class Review {
   factory Review.fromJson(Map<String, dynamic> json) {
     return Review(
         reviewId: json['review_id'],
-        userId: json['user_id'],
-        gameId: json['game_id'],
+        user: json['user'] != null? User.fromJson(json['user']): null,
+        game: json['game'] != null? Game.fromJson(json['game']): null,
         reviewBody: json['review_body'].toString(),
         score: json['score']
     );
@@ -94,8 +127,12 @@ class Review {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['review_id'] = reviewId;
-    data['user_id'] = userId;
-    data['game_id'] = gameId;
+    if (user != null) {
+      data['user'] = user!.toJson();
+    }
+    if (game != null) {
+      data['game'] = game!.toJson();
+    }
     data['review_body'] = reviewBody;
     data['score'] = score;
     return data;

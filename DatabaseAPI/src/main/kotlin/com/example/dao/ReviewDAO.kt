@@ -16,8 +16,8 @@ class ReviewDAO : GenericDAO
                 reviews.add(
                     Review(
                         resultSet.getInt("review_id"),
-                        resultSet.getInt("user_id"),
-                        resultSet.getInt("game_id"),
+                        UserDAO().idSearch(resultSet.getInt("user_id")),
+                        GameDAO().idSearch(resultSet.getInt("game_id")),
                         resultSet.getString("review_body"),
                         resultSet.getInt("score")
                     )
@@ -41,8 +41,8 @@ class ReviewDAO : GenericDAO
                 reviews.add(
                     Review(
                         resultSet.getInt("review_id"),
-                        resultSet.getInt("user_id"),
-                        resultSet.getInt("game_id"),
+                        UserDAO().idSearch(resultSet.getInt("user_id")),
+                        GameDAO().idSearch(resultSet.getInt("game_id")),
                         resultSet.getString("review_body"),
                         resultSet.getInt("score")
                     )
@@ -67,8 +67,8 @@ class ReviewDAO : GenericDAO
                 reviews.add(
                     Review(
                         resultSet.getInt("review_id"),
-                        resultSet.getInt("user_id"),
-                        resultSet.getInt("game_id"),
+                        UserDAO().idSearch(resultSet.getInt("user_id")),
+                        GameDAO().idSearch(resultSet.getInt("game_id")),
                         resultSet.getString("review_body"),
                         resultSet.getInt("score")
                     )
@@ -94,8 +94,8 @@ class ReviewDAO : GenericDAO
                 reviews.add(
                     Review(
                         resultSet.getInt("review_id"),
-                        resultSet.getInt("user_id"),
-                        resultSet.getInt("game_id"),
+                        UserDAO().idSearch(resultSet.getInt("user_id")),
+                        GameDAO().idSearch(resultSet.getInt("game_id")),
                         resultSet.getString("review_body"),
                         resultSet.getInt("score")
                     )
@@ -122,8 +122,8 @@ class ReviewDAO : GenericDAO
                     VALUES(?,?,?,?);
                 """.trimIndent()
                 )
-                preparedStatement?.setInt(1, review.user_id)
-                preparedStatement?.setInt(2, review.game_id)
+                preparedStatement?.setInt(1, review.user.user_id)
+                preparedStatement?.setInt(2, review.game.game_id)
                 preparedStatement?.setString(3, review.review_body)
                 preparedStatement?.setInt(4, review.score)
                 preparedStatement?.executeUpdate()
@@ -152,8 +152,8 @@ class ReviewDAO : GenericDAO
                 WHERE review_id= ?;
             """.trimIndent()
                 )
-                preparedStatement?.setInt(1, review.user_id)
-                preparedStatement?.setInt(2, review.game_id)
+                preparedStatement?.setInt(1, review.user.user_id)
+                preparedStatement?.setInt(2, review.game.game_id)
                 preparedStatement?.setString(3, review.review_body)
                 preparedStatement?.setInt(4, review.score)
                 preparedStatement?.executeUpdate()

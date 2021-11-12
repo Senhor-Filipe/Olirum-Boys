@@ -152,9 +152,9 @@ class _GameSelectedState extends State<GameSelected> {
               );
             },
           ),
-          SizedBox(height: screenSize.height*0.1),
+          SizedBox(height: screenSize.height*0.05),
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 0),
+            padding: const EdgeInsets.only(top: 30),
             width: ResponsiveWidget.isSmallScreen(context)?
             screenSize.width * 0.8:
             ResponsiveWidget.isMediumScreen(context)?
@@ -178,7 +178,7 @@ class _GameSelectedState extends State<GameSelected> {
                     reviews = snapshot.data;
                     if (reviews.isEmpty) {
                       return const SizedBox(
-                        height: 300,
+                        height: 100,
                         child: Center(
                           child: Text(
                             "There are no reviews for this game",
@@ -187,17 +187,35 @@ class _GameSelectedState extends State<GameSelected> {
                         ),
                       );
                     }
-                    return SizedBox(
-                      height: reviews.length*300,
-                      child: ListView.builder(
-                        itemCount: counter > reviews.length?
-                          reviews.length:
-                          counter + 1,
-                        itemExtent: 200,
-                        itemBuilder: (context, index) {
-                          return ReviewListTile(data: widget.data, review: reviews[index]);
-                        },
-                      ),
+                    return Column(
+                      children: [
+                        SizedBox(
+                          height: counter + 1 >= reviews.length?
+                            reviews.length*200 + 50:
+                            (counter + 1)*200 + 50,
+                          child: ListView.builder(
+                            itemCount: counter + 1 >= reviews.length?
+                              reviews.length:
+                              counter + 1,
+                            itemExtent: 210,
+                            itemBuilder: (context, index) {
+                              return ReviewListTile(data: widget.data, review: reviews[index]);
+                            },
+                          ),
+                        ),
+                        Center(
+                          child: OutlinedButton(
+                            onPressed: () {
+                              setState(() {
+                                counter = counter + 1;
+                              });
+                            },
+                            child: counter + 1 >= reviews.length?
+                              const Text("You reached the end"):
+                              const Text("View more"),
+                          ),
+                        )
+                      ],
                     );
                   }
                 }

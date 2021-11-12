@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'dart:html' as html;
 import 'package:flutter_front_end/models/screen_arguments.dart';
+import 'package:flutter_front_end/models/user.dart';
 
 class TopBarContents extends StatefulWidget {
-  final int userId;
-  final String username;
+  final User user;
   final bool logged;
 
   const TopBarContents({
     Key? key,
-    required this.userId,
-    required this.username,
+    required this.user,
     required this.logged
   }) : super(key: key);
 
@@ -57,8 +56,7 @@ class _TopBarContentsState extends State<TopBarContents> {
                   Navigator.of(context).pushNamed(
                     '/',
                     arguments: ScreenArguments(
-                        widget.username,
-                        widget.userId,
+                        widget.user,
                         widget.logged,
                         0
                     )
@@ -102,8 +100,7 @@ class _TopBarContentsState extends State<TopBarContents> {
                         Navigator.of(context).pushNamed(
                             '/game',
                             arguments: ScreenArguments(
-                                widget.username,
-                                widget.userId,
+                                widget.user,
                                 widget.logged,
                                 0
                             )
@@ -223,10 +220,9 @@ class _TopBarContentsState extends State<TopBarContents> {
                   Navigator.of(context).pushNamed(
                     '/user',
                     arguments: ScreenArguments(
-                        widget.username,
-                        widget.userId,
+                        widget.user,
                         widget.logged,
-                        widget.userId
+                        widget.user.userId
                     )
                   ):
                   Navigator.of(context).pushNamed(
@@ -237,7 +233,7 @@ class _TopBarContentsState extends State<TopBarContents> {
                 // Sets Text and color for InkWell
                 child: widget.logged?
                   Text(
-                    'Welcome ${widget.username}',
+                    'Welcome ${widget.user.userId}',
                     style: TextStyle(
                       color: _isHovering[2]
                           ? Colors.white
@@ -281,8 +277,7 @@ class _TopBarContentsState extends State<TopBarContents> {
                   Navigator.of(context).pushNamed(
                       '/',
                       arguments: ScreenArguments(
-                          "",
-                          0,
+                          User(userId: 0, username: "NO_DATA", pwd: "NO_DATA"),
                           false,
                           0
                       )

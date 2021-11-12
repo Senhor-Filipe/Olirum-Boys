@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Review(
     val review_id:Int,
-    val user_id:Int,
-    val game_id:Int,
+    val user:User,
+    val game:Game,
     val review_body:String,
     val score:Int
 )

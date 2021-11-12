@@ -1,12 +1,12 @@
+import 'package:flutter_front_end/models/user.dart';
+
 class ScreenArguments {
-  String username;
-  int userId;
+  User user;
   bool logged;
   int dataId;
 
   ScreenArguments(
-      this.username,
-      this.userId,
+      this.user,
       this.logged,
       this.dataId
       );

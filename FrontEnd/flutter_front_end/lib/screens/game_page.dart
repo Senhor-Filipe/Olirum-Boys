@@ -64,16 +64,14 @@ class _GamePageState extends State<GamePage> {
             : PreferredSize(
           preferredSize: Size(screenSize.width, 1000),
           child: TopBarContents(
-            userId: widget.data.userId,
-            username: widget.data.username,
+            user: widget.data.user,
             logged: widget.data.logged,
           ),
         ),
 
         // Calls drawer widget
         drawer: TopBarDrawer(
-          userId: widget.data.userId,
-          username: widget.data.username,
+          user: widget.data.user,
           logged: widget.data.logged,
         ),
 

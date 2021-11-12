@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front_end/models/screen_arguments.dart';
+import 'package:flutter_front_end/models/user.dart';
 import 'package:flutter_front_end/screens/game_page.dart';
 import 'package:flutter_front_end/screens/home_page.dart';
 import 'package:flutter_front_end/screens/register_page.dart';
@@ -8,7 +9,8 @@ import 'package:flutter_front_end/screens/user_page.dart';
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
-    ScreenArguments data = ScreenArguments("", 0, false, 0);
+    User userDefault = User(userId: 0, username: "NO_DATA", pwd: "NO_DATA");
+    ScreenArguments data = ScreenArguments(userDefault, false, 0);
 
     if (args != null)
     {

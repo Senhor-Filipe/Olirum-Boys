@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front_end/models/review.dart';
 import 'package:flutter_front_end/models/screen_arguments.dart';
-import 'package:flutter_front_end/models/user.dart';
 
 class ReviewListTile extends StatefulWidget {
   final ScreenArguments data;
@@ -18,57 +17,51 @@ class ReviewListTile extends StatefulWidget {
 }
 
 class _ReviewListTileState extends State<ReviewListTile> {
-  User? user;
-
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      tileColor: Colors.indigo,
-      leading: Text(
-        widget.review.score.toString(),
-        style: const TextStyle(
-          fontSize: 20
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: ListTile(
+        tileColor: Colors.indigo,
+        leading: Text(
+          widget.review.score.toString(),
+          style: const TextStyle(
+            fontSize: 20
+          ),
         ),
-      ),
-      title: Padding(
-        padding: const EdgeInsets.only(top: 15),
-        child: FutureBuilder<User>(
-            future: fetchUserById(widget.review.userId),
-            builder: (context, AsyncSnapshot<User> snapshot) {
-              if (snapshot.hasData) {
-                if (snapshot.hasError) {
-                  return Text(
-                    "Error: ${snapshot.error}. Please, try again later",
-                    overflow: TextOverflow.ellipsis,
-                  );
-                } else {
-                  user = snapshot.data;
-                  return InkWell(
-                      hoverColor: Colors.transparent,
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/user',
-                            arguments: ScreenArguments(
-                                widget.data.username,
-                                widget.data.userId,
-                                widget.data.logged,
-                                widget.review.userId));
-                      },
-                      child: Text(user!.username)
-                  );
-                }
-              }
-              return const Text(
-                "USER NOT FOUND",
-                overflow: TextOverflow.ellipsis,
-              );
-            }
+        title: Padding(
+          padding: const EdgeInsets.only(top: 15),
+          child: InkWell(
+            hoverColor: Colors.transparent,
+            onTap: () {
+              Navigator.of(context).pushNamed('/user',
+                  arguments: ScreenArguments(
+                      widget.data.user,
+                      widget.data.logged,
+                      widget.review.user!.userId));
+            },
+            child: Text(widget.review.user!.username)
+          )
         ),
-      ),
-      subtitle: Container(
-        margin: const EdgeInsets.only(top: 20),
-        child: Text(
-          widget.review.reviewBody,
-          overflow: TextOverflow.ellipsis,
+        subtitle: Container(
+          margin: const EdgeInsets.only(top: 10),
+          child: InkWell(
+              onTap: () {
+                Navigator.of(context).pushNamed('/user',
+                    arguments: ScreenArguments(
+                        widget.data.user,
+                        widget.data.logged,
+                        widget.review.user!.userId));
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Text(
+                  widget.review.reviewBody,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 6,
+                ),
+              ),
+          ),
         ),
       ),
     );
