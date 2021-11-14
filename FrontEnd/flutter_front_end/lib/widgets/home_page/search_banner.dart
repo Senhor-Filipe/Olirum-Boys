@@ -66,8 +66,8 @@ class SearchBanner extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   Navigator.of(context).pushNamed(
-                      '/game',
-                      arguments: data
+                    '/game',
+                    arguments: data
                   );
                 },
                 child: Row(
@@ -76,8 +76,8 @@ class SearchBanner extends StatelessWidget {
                   children: [
                     Text(
                       ResponsiveWidget.isSmallScreen(context)?
-                          "Search":
-                          "Click this field to search a new game to review"
+                        "Search":
+                        "Click this field to search a new game to review"
                     ),
                     const SizedBox(width: 20),
                     const Icon(Icons.search_sharp)

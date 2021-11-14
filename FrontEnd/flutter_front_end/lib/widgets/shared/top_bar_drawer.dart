@@ -85,6 +85,11 @@ class _TopBarDrawerState extends State<TopBarDrawer> {
                   ):
                   Navigator.of(context).pushNamed(
                     '/register',
+                      arguments: ScreenArguments(
+                          widget.user,
+                          widget.logged,
+                          widget.user.userId
+                      )
                   );
                 },
 
@@ -113,7 +118,12 @@ class _TopBarDrawerState extends State<TopBarDrawer> {
                       )
                   ):
                   Navigator.of(context).pushNamed(
-                      '/register'
+                      '/login',
+                      arguments: ScreenArguments(
+                          widget.user,
+                          widget.logged,
+                          widget.user.userId
+                      )
                   );
                 },
                 child: widget.logged?
@@ -126,6 +136,26 @@ class _TopBarDrawerState extends State<TopBarDrawer> {
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ),
+
+              const SizedBox(height: 10),
+
+              widget.logged?
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(
+                        '/upload',
+                        arguments: ScreenArguments(
+                            widget.user,
+                            widget.logged,
+                            widget.user.userId
+                        )
+                    );
+                  },
+                  child: const Text(
+                    'Upload review',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ): const Text(""),
             ],
           ),
         ),

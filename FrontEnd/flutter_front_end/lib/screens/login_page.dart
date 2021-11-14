@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front_end/models/screen_arguments.dart';
+import 'package:flutter_front_end/widgets/login_register_page/login.dart';
 import 'package:flutter_front_end/widgets/responsive.dart';
 import 'package:flutter_front_end/widgets/shared/footer.dart';
 import 'package:flutter_front_end/widgets/shared/top_bar_contents.dart';
 import 'package:flutter_front_end/widgets/shared/top_bar_drawer.dart';
-import 'package:flutter_front_end/widgets/user_page/user_profile.dart';
 
-class UserPage extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   final ScreenArguments data;
 
-  const UserPage({
+  const LoginPage({
     Key? key,
     required this.data
   }) : super(key: key);
 
   @override
-  _UserPageState createState() => _UserPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _UserPageState extends State<UserPage> {
+class _LoginPageState extends State<LoginPage> {
   final ScrollController _scrollController = ScrollController();
 
   _scrollListener() {
@@ -38,54 +38,54 @@ class _UserPageState extends State<UserPage> {
     return Scaffold(
       // Verifies the screen size of the device to load correct layout
       appBar: ResponsiveWidget.isSmallScreen(context)
-        // Layout for mobile
-        ? AppBar(
-          backgroundColor: Colors.indigo  ,
-          title: InkWell(
-            onTap: () {
-              Navigator.of(context).pushNamed(
+      // Layout for mobile
+          ? AppBar(
+        backgroundColor: Colors.indigo  ,
+        title: InkWell(
+          onTap: () {
+            Navigator.of(context).pushNamed(
                 '/',
                 arguments: widget.data
-              );
-            },
+            );
+          },
 
-            child: const Text(
+          child: const Text(
               'Golden Console',
               style: TextStyle(
-                color: Colors.amber
+                  color: Colors.amber
               )
-            ),
-          ),
-        )
-
-        // Layout for Web
-        : PreferredSize(
-          preferredSize: Size(screenSize.width, 1000),
-          child: TopBarContents(
-            user: widget.data.user,
-            logged: widget.data.logged
           ),
         ),
+      )
+
+      // Layout for Web
+          : PreferredSize(
+        preferredSize: Size(screenSize.width, 1000),
+        child: TopBarContents(
+            user: widget.data.user,
+            logged: widget.data.logged
+        ),
+      ),
 
       // Calls drawer widget
       drawer: TopBarDrawer(
-        user: widget.data.user,
-        logged: widget.data.logged
+          user: widget.data.user,
+          logged: widget.data.logged
       ),
 
       // Body of the page
       body: SingleChildScrollView(
-        controller: _scrollController,
-        physics: const ClampingScrollPhysics(),
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            children: [
-              UserProfile(data: widget.data),
-              const Footer()
-            ],
+          controller: _scrollController,
+          physics: const ClampingScrollPhysics(),
+          child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                children: const [
+                  Login(),
+                  Footer(),
+                ],
+              )
           ),
-        )
       ),
     );
   }

@@ -31,6 +31,32 @@ class UserDAO: GenericDAO
         return users[0]
     }
 
+    fun nameSearch(name: String): User
+    {
+        val users = mutableListOf<User>()
+
+        try {
+            val connection = ConnectionDAO()
+            val resultSet = connection.executeQuery("SELECT * FROM Users WHERE user_name = $name;")
+            while (resultSet?.next()!!)
+            {
+                users.add(
+                    User(
+                        resultSet.getInt("user_id"),
+                        resultSet.getString("user_name"),
+                        resultSet.getString("user_pwd")
+                        //, resultSet.getString("user_level")
+                    )
+                )
+            }
+            connection.close()
+        } catch (e:Exception) {
+            e.printStackTrace()
+        }
+
+        return users[0]
+    }
+
     override fun getAll(): UserList
     {
         val users = mutableListOf<User>()
@@ -160,5 +186,36 @@ class UserDAO: GenericDAO
         if (possibleDuplicates.isEmpty())
             return false
         return true
+    }
+
+    fun login(user: User): Boolean {
+        val possibleLogin = mutableListOf<User>()
+        try {
+            val connection = ConnectionDAO()
+            val resultSet = connection.executeQuery("""
+                SELECT *
+                FROM olirum_boys.Users
+                WHERE user_name = "${user.user_name}"
+            """.trimIndent())
+
+            while (resultSet?.next()!!)
+            {
+                possibleLogin.add(
+                    User(
+                        resultSet.getInt("user_id"),
+                        resultSet.getString("user_name"),
+                        resultSet.getString("user_pwd")
+                    )
+                )
+            }
+            connection.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        for (u in possibleLogin) {
+            if (u.user_pwd == user.user_pwd)
+                return true
+        }
+        return false
     }
 }

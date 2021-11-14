@@ -68,6 +68,38 @@ Future<List<Review>> fetchReviewListByGameId(int id) async {
   return _data;
 }
 
+Future<List<Review>> fetchReviewListByUserId(int id) async {
+  Response response = await get(Uri.parse("http://127.0.0.1:8080/user/review/$id"));
+
+  final _extractedData = json.decode(response.body) as Map<String, dynamic>;
+
+  List<Review> _data = [];
+  List<Review> _fetchedData = [];
+
+  _extractedData['review_list'].forEach((value) {
+    _fetchedData.add(Review(
+        reviewId: value['review_id'],
+        user: User(
+            userId: value['user']['user_id'],
+            username: value['user']['user_name'].toString(),
+            pwd: value['user']['user_pwd'].toString()
+        ),
+        game: Game(
+            gameId: value['game']['game_id'],
+            gameName: value['game']['game_name'],
+            developer: value['game']['developer'],
+            genre: value['game']['genre'],
+            cover: value['game']['cover']
+        ),
+        reviewBody: value['review_body'],
+        score: value['score']));
+  });
+
+  _data = _fetchedData;
+
+  return _data;
+}
+
 Future<Review> fetchReviewById(int id) async {
   Response response = await get(Uri.parse("http://127.0.0.1:8080/review/$id"));
 

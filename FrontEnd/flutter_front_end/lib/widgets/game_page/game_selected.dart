@@ -177,13 +177,16 @@ class _GameSelectedState extends State<GameSelected> {
                   } else {
                     reviews = snapshot.data;
                     if (reviews.isEmpty) {
-                      return const SizedBox(
-                        height: 100,
-                        child: Center(
-                          child: Text(
-                            "There are no reviews for this game",
-                            overflow: TextOverflow.ellipsis,
-                          )
+                      return Container(
+                        color: Colors.indigo,
+                        child: const SizedBox(
+                          height: 100,
+                          child: Center(
+                            child: Text(
+                              "There are no reviews for this game",
+                              overflow: TextOverflow.ellipsis,
+                            )
+                          ),
                         ),
                       );
                     }

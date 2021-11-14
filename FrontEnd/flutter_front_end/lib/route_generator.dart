@@ -3,14 +3,16 @@ import 'package:flutter_front_end/models/screen_arguments.dart';
 import 'package:flutter_front_end/models/user.dart';
 import 'package:flutter_front_end/screens/game_page.dart';
 import 'package:flutter_front_end/screens/home_page.dart';
+import 'package:flutter_front_end/screens/login_page.dart';
 import 'package:flutter_front_end/screens/register_page.dart';
+import 'package:flutter_front_end/screens/review_upload_page.dart';
 import 'package:flutter_front_end/screens/user_page.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
-    User userDefault = User(userId: 0, username: "NO_DATA", pwd: "NO_DATA");
-    ScreenArguments data = ScreenArguments(userDefault, false, 0);
+    User userDefault = User(userId: 1, username: "Ishikawajun", pwd: "12345");
+    ScreenArguments data = ScreenArguments(userDefault, true, 0);
 
     if (args != null)
     {
@@ -24,10 +26,21 @@ class RouteGenerator {
               data: data,
             )
         );
-      case '/register':
-        // TODO when register page is finished, fix here (medium priority)
+      case '/login':
         return PageRouteBuilder(
-            pageBuilder: (_, __, ___) => HomePage(
+            pageBuilder: (_, __, ___) => LoginPage(
+              data: data,
+            )
+        );
+      case '/register':
+        return PageRouteBuilder(
+            pageBuilder: (_, __, ___) => RegisterPage(
+              data: data,
+            )
+        );
+      case '/upload':
+        return PageRouteBuilder(
+            pageBuilder: (_, __, ___) => ReviewUpload(
               data: data,
             )
         );

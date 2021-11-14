@@ -34,6 +34,21 @@ fun Route.userRouting() {
                 call.respondText("Not found", status = HttpStatusCode.NotFound)
         }
 
+        post("/login") {
+            val user = call.receive<User>()
+
+            if (UserDAO().login(user)) {
+                call.respond(
+                    UserDAO().nameSearch(user.user_name)
+                )
+            } else {
+                call.respondText(
+                    "Login incorrect",
+                    status = HttpStatusCode.BadRequest
+                )
+            }
+        }
+
         post {
             val user = call.receive<User>()
 

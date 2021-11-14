@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_front_end/models/game.dart';
 import 'package:flutter_front_end/models/screen_arguments.dart';
-import 'package:flutter_front_end/widgets/cards/game_card.dart';
 import 'package:flutter_front_end/widgets/responsive.dart';
 
 class GameGridView extends StatefulWidget {

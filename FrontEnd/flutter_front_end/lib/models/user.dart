@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:html';
 import 'package:http/http.dart';
 
 Future<List<User>> fetchUserList() async {
@@ -11,9 +12,9 @@ Future<List<User>> fetchUserList() async {
 
   _extractedData['user_list'].forEach((value) {
     _fetchedData.add(User(
-        userId: value['user_id'],
-        username: value['user_name'],
-        pwd: value['user_pwd'],
+      userId: value['user_id'],
+      username: value['user_name'],
+      pwd: value['user_pwd'],
     ));
   });
 
@@ -62,7 +63,7 @@ class User {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['user_id'] = userId;
+    data['user_id'] = "";
     data['user_name'] = username;
     data['user_pwd'] = pwd;
     return data;

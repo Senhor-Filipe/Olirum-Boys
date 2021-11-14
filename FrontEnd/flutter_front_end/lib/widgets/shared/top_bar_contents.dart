@@ -24,6 +24,7 @@ class _TopBarContentsState extends State<TopBarContents> {
     false,
     false,
     false,
+    false,
   ];
 
   @override
@@ -214,7 +215,6 @@ class _TopBarContentsState extends State<TopBarContents> {
                 },
 
                 // onTap to redirect to SignUp screen
-                // TODO: fix screen arguments later
                 onTap: () {
                   widget.logged?
                   Navigator.of(context).pushNamed(
@@ -227,13 +227,18 @@ class _TopBarContentsState extends State<TopBarContents> {
                   ):
                   Navigator.of(context).pushNamed(
                     '/register',
+                      arguments: ScreenArguments(
+                          widget.user,
+                          widget.logged,
+                          widget.user.userId
+                      )
                   );
                 },
 
                 // Sets Text and color for InkWell
                 child: widget.logged?
                   Text(
-                    'Welcome ${widget.user.userId}',
+                    'Welcome ${widget.user.username}',
                     style: TextStyle(
                       color: _isHovering[2]
                           ? Colors.white
@@ -271,7 +276,6 @@ class _TopBarContentsState extends State<TopBarContents> {
                 },
 
                 // onTap to redirect to login screen
-                // TODO: fix screen arguments later
                 onTap: () {
                   widget.logged?
                   Navigator.of(context).pushNamed(
@@ -283,7 +287,12 @@ class _TopBarContentsState extends State<TopBarContents> {
                       )
                   ):
                   Navigator.of(context).pushNamed(
-                      '/register'
+                      '/login',
+                      arguments: ScreenArguments(
+                          widget.user,
+                          widget.logged,
+                          widget.user.userId
+                      )
                   );
                 },
 
@@ -302,6 +311,50 @@ class _TopBarContentsState extends State<TopBarContents> {
                     ),
                   ),
               ),
+
+              widget.logged?
+                Row(
+                  children: [
+                    // Divides the previous row children with the next
+                    SizedBox(width: screenSize.width / 100),
+
+                    Container(
+                      height: 30,
+                      width: 2,
+                      color: Colors.blueGrey,
+                    ),
+
+                    // Divides the previous row children with the next
+                    SizedBox(width: screenSize.width / 100),
+                    InkWell(
+                      onHover: (value) {
+                        setState(() {
+                          value ? _isHovering[4] = true : _isHovering[4] = false;
+                        });
+                      },
+
+                      // onTap to redirect to login screen
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                          '/upload',
+                          arguments: ScreenArguments(
+                              widget.user,
+                              widget.logged,
+                              widget.user.userId
+                          )
+                        );
+                      },
+
+                      // Sets Text and color for InkWell
+                      child: Text(
+                        'Upload review',
+                        style: TextStyle(
+                          color: _isHovering[4] ? Colors.white : Colors.white70,
+                        ),
+                      ),
+                    )
+                  ]
+                ): const Text(""),
             ],
           ),
         ),

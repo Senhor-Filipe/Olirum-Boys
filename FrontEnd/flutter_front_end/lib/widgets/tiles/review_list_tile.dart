@@ -54,7 +54,7 @@ class _ReviewListTileState extends State<ReviewListTile> {
                         widget.review.user!.userId));
               },
               child: Padding(
-                padding: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 10, right: 30),
                 child: Text(
                   widget.review.reviewBody,
                   overflow: TextOverflow.ellipsis,
