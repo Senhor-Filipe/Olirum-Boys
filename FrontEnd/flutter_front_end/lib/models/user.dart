@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:html';
 import 'package:http/http.dart';
 
 Future<List<User>> fetchUserList() async {

@@ -141,6 +141,17 @@ class _ReviewUploadState extends State<ReviewUpload> {
                       ),
                     );
                   },
+                ),
+                const SizedBox(height: 10),
+                TextButton(
+                  onPressed: () {
+                    //TODO upload http request
+                  },
+                  child: const Center(
+                    child: Text(
+                        "Upload"
+                    ),
+                  ),
                 )
               ],
             );

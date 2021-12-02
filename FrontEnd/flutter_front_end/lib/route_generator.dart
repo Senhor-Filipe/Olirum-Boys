@@ -11,7 +11,7 @@ import 'package:flutter_front_end/screens/user_page.dart';
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
-    User userDefault = User(userId: 1, username: "Ishikawajun", pwd: "12345");
+    User userDefault = User(userId: 0, username: "", pwd: "");
     ScreenArguments data = ScreenArguments(userDefault, true, 0);
 
     if (args != null)

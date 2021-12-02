@@ -12,12 +12,21 @@ Linguagens utilizadas neste projeto: **Kotlin**
 Code languages being used by this project: **Kotlin**
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Frameworks being used in this project: **Ktor**
 
+To use the FrontEnd, simply run the Olirum-Boys/FrontEnd/flutter_front_end/lib/main.dart
+
+#### Members:
+
+* Matheus Sungho Ha 18.00525-0
+* Guilherme Jun Ishikawa 18.00906-9
+* Filipe dos Santos Pugliesi
+* Pedro Lemes
+
 &nbsp;
 
 ---
 ## File structure
 &nbsp;
-&nbsp;Remember to keep a good organization of the files. The code is divided into some folders for better readability and ease of use. In this section will be located the description for each folder of this repository.
+&nbsp;Remember to keep a good organization of the files. The code is divided into folders for better readability and ease of use. In this section will be located the description for each folder of this repository.
 
 ### DatabaseAPI/src/main/kotlin/com/example` directory
 
@@ -47,9 +56,13 @@ Code languages being used by this project: **Kotlin**
 * widget folder
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contain the data that builds the widgets of the site. On this folder, we divided into `cards` which contains the cards to show the Game, Review and Users, `[specific]_page` which contains the body parts of the [specific] screen, `shared` which contains widgets that all screens contain and `text` for Text widgets.
 
-### `FrontEnd/flutter_front_end/assets` directory
+### `FrontEnd/flutter_front_end/assets/images` directory
 
-*
+* site_image folder
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contain the images used on the site on background, icons, etc.
+
+* game_cover folder
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contain the cover of the games contained on the database.
 
 &nbsp;
 
