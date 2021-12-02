@@ -18,8 +18,8 @@ To use the FrontEnd, simply run the Olirum-Boys/FrontEnd/flutter_front_end/lib/m
 
 * Matheus Sungho Ha 18.00525-0
 * Guilherme Jun Ishikawa 18.00906-9
-* Filipe dos Santos Pugliesi
-* Pedro Lemes
+* Filipe dos Santos Pugliesi 18.02608-7
+* Pedro Lemes 19.00671-3
 
 &nbsp;
 
